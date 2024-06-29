@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    container_name: cartel-de-khali-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    command: ["--log-bin=none", "--skip-log-bin"]
+    networks:
+      - shared
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  react-app:
+    container_name: cartel-de-khali-front
+    build: ./frontend
+    image: node:18-alpine
+    ports:
+      - 3000:3000
+    command: 'npm start'
+    volumes:
+      - ./frontend:/app
+      - ./frontend/node_modules:/app/node_modules
+    tty: true
+    stdin_open: true
+  app:
+    image: ubuntu:latest
+    # For different app you can use different names. (eg: )
+    container_name: cartel-de-khali-back
+    build: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # app source code
+      - ./:/var/www/html
+      # db data persistence
+      - db_data:/var/lib/mysql
+      # Here you can also volume php ini settings
+      # - /path/to/zz-overrides:/usr/local/etc/php/conf.d/zz-overrides.ini
+    ports:
+      # - 80:80
+      - 8081:80
+      - 8888:8888
+      # - 3306:3306
+      - 8080:8080
+    networks:
+      - shared
+    environment:
+      MYSQL_ROOT_PASSWORD: cartel-de-khali
+      MYSQL_DATABASE: database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: cartel-de-khali
+      # for postgres you can pass in similar env as for mysql but with PGSQL_ prefix
+  # react-app:
+  #   build: ./resources/js
+  #   image: node:18-alpine
+  #   container_name: cartel-de-khali-back
+  #   ports:
+  #     - 3000:3000
+  #   command: 'npm start'
+  #   volumes:
+  #     - ./resources/js:/app
+  #     - ./resources/js/node_modules:/app/node_modules
+  #   tty: true
+  #   stdin_open: true
+
+volumes:
+  db_data: {}
+
+networks:
+  shared: 
+    external:
+      name: shared
