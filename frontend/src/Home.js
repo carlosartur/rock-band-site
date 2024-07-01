@@ -10,7 +10,7 @@ const Home = (props) => {
         <Col xs={10} md={4}>
           <div className="inline-block">
             {/* <img src="./kali.svg" className="bg-white max-h-1/2 h-auto w-full" /> */}
-            <img src="./logo-banda.png" className="max-h-1/3 h-auto" />
+            <img src="./logo-banda.png" className="max-h-[50vh] h-auto" />
           </div>
         </Col>
         

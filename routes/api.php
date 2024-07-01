@@ -10,5 +10,6 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/bla', function (Request $request) {
+    // return response()->json(['random' => rand()]);
     return response()->json(User::all());
 });

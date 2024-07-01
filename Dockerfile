@@ -29,9 +29,9 @@ RUN composer global require laravel/installer
 WORKDIR /var/www/html
 
 # Ajuste o diretório home do MySQL
-RUN usermod -d /var/lib/mysql mysql
+# RUN usermod -d /var/lib/mysql mysql
 
-RUN chown -R mysql:mysql /var/lib/mysql && chmod -R 755 /var/lib/mysql
+# RUN chown -R mysql:mysql /var/lib/mysql && chmod -R 755 /var/lib/mysql
 
 # Exponha as portas necessárias
 EXPOSE 80 443

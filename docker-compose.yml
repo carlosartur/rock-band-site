@@ -60,19 +60,6 @@ services:
       MYSQL_DATABASE: database
       MYSQL_USER: user
       MYSQL_PASSWORD: cartel-de-khali
-      # for postgres you can pass in similar env as for mysql but with PGSQL_ prefix
-  # react-app:
-  #   build: ./resources/js
-  #   image: node:18-alpine
-  #   container_name: cartel-de-khali-back
-  #   ports:
-  #     - 3000:3000
-  #   command: 'npm start'
-  #   volumes:
-  #     - ./resources/js:/app
-  #     - ./resources/js/node_modules:/app/node_modules
-  #   tty: true
-  #   stdin_open: true
 
 volumes:
   db_data: {}
