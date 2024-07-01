@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import { Suspense } from 'react';
 import './App.css';
+import './app.scss';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import AdminLayout from './admin/AdminLayout';
 import MainLayout from './MainLayout';
@@ -13,7 +14,7 @@ function App() {
   );
 
   return (
-    <div className="App">
+    <div className="App d-flex justify-content-center align-items-center min-vh-100">
       <HashRouter>
         <Suspense fallback={loading}></Suspense>
         <Routes>
