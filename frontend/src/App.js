@@ -5,6 +5,9 @@ import './app.scss';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import AdminLayout from './admin/AdminLayout';
 import MainLayout from './MainLayout';
+import DefaultLayout from './admin/layout/DefaultLayout';
+import Login from './admin/pages/Login';
+import { AuthProvider } from './admin/context/AuthContext';
 
 function App() {
   const loading = (
@@ -14,15 +17,14 @@ function App() {
   );
 
   return (
-    <div className="App d-flex justify-content-center align-items-center min-vh-100">
-      <HashRouter>
-        <Suspense fallback={loading}></Suspense>
-        <Routes>
-          <Route path='/admin/*' element={<AdminLayout />}/>
-          <Route path='*' element={<MainLayout />}/>
-        </Routes>
-      </HashRouter>
-    </div>
+    <HashRouter>
+      <Suspense fallback={loading}></Suspense>
+      <Routes>
+        <Route path='/admin/*' element={<DefaultLayout />}/>
+        <Route path='/login' element={<AuthProvider><Login /></AuthProvider>}/>
+        <Route path='*' element={<MainLayout />}/>
+      </Routes>
+    </HashRouter>
   );
 }
 

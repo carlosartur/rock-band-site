@@ -30,9 +30,9 @@ const CountdownTimer = ({ targetDate }) => {
   const timerComponents = [];
 
   Object.keys(timeLeft).forEach((interval) => {
-    if (!timeLeft[interval]) {
-      return;
-    }
+    // if (!timeLeft[interval]) {
+    //   return;
+    // }
 
     timerComponents.push(
       <span className="text-white" key={interval}>

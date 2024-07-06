@@ -3,19 +3,21 @@ import routes from "./routes";
 
 const MainLayout = props => {
     return <>
-        <Routes>
-            {routes.map((frontendRoute, index) => {
-                return (
-                    <Route
-                        key={index}
-                        path={frontendRoute.path}
-                        exact={frontendRoute.exact}
-                        name={frontendRoute.name}
-                        element={<frontendRoute.element />}
-                    />
-                );
-            })}
-        </Routes>
+        <div className="front-main">
+            <Routes>
+                {routes.map((frontendRoute, index) => {
+                    return (
+                        <Route
+                            key={index}
+                            path={frontendRoute.path}
+                            exact={frontendRoute.exact}
+                            name={frontendRoute.name}
+                            element={<frontendRoute.element />}
+                        />
+                    );
+                })}
+            </Routes>
+        </div>
     </>
 }
 

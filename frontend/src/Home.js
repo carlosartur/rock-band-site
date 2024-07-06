@@ -4,7 +4,7 @@ import CountdownTimer from './CountdownTimer';
 const Home = (props) => {
   return (
     <>
-      <Row>
+      <Row className='text-center overflow-hidden'>
         <Col xs={1} md={4}></Col>
 
         <Col xs={10} md={4}>
@@ -26,7 +26,7 @@ const Home = (props) => {
       <Row>
         <Col xs={1} md={4}></Col>
         <Col xs={10} md={4}>
-          <p className='text-white w-full text-4xl '>
+          <p className='text-white w-full text-4xl text-center'>
             <CountdownTimer targetDate="2024-08-01T00:00:00Z" />
           </p>
         </Col>
