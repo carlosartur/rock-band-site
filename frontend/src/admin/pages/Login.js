@@ -25,6 +25,7 @@ import '../scss/style.scss';
 
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../api/api';
 
 const Login = () => {
   const toaster = useRef();
@@ -50,8 +51,9 @@ const Login = () => {
     if (e) {
       e.preventDefault();
     }
-
-    axios
+    
+    api
+    // axios
       .post(`${process.env.REACT_APP_API_URL}/admin-auth/login`, formData)
       .then((response) => {
         const newLoginData = response.data;

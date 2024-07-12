@@ -2,34 +2,14 @@ import React from 'react';
 import CIcon from '@coreui/icons-react';
 import {
   cilLibraryBuilding,
-  cilBuilding,
-  cilMoney,
-
-  /** Padrão do tema */
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilNotes,
-  cilPencil,
-  cilPuzzle,
-  cilSpeedometer,
-  cilStar,
-  cilAirplaneMode,
   cilUser,
   cilCalendarCheck,
   cilPhone,
   cilCamera,
-  cilInbox,
   cilNewspaper,
   cilCog,
-  cilFilterPhoto,
-  cilImagePlus,
 } from '@coreui/icons';
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react';
-import Cookies from 'js-cookie';
 
 const _nav = [
   {

@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { CsrfProvider } from './admin/context/CsrfContext';
 
 const initialState = {
   sidebarShow: true,
@@ -24,9 +25,11 @@ const store = createStore(changeState);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <CsrfProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </CsrfProvider>
   </Provider>
 );
 

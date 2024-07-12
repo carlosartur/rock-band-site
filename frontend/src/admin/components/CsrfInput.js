@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-export const CsrtInput = () => {
+export const CsrfInput = () => {
   const [csrfToken, setCsrfToken] = useState('');
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/admin/get-csrf-token`)
+      .get(`${process.env.REACT_APP_API_URL}/csrf-token`)
       .then((response) => {
         setCsrfToken(response.data.csrf_token);
       })
