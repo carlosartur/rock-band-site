@@ -4,14 +4,15 @@ import routes from "./routes";
 const AdminLayout = props => {
     return <>
         <Routes>
-            {routes.map((frontendRoute, index) => {
+            {routes.map((adminRoute, index) => {
                 return (
                     <Route
                         key={index}
-                        path={frontendRoute.path}
-                        exact={frontendRoute.exact}
-                        name={frontendRoute.name}
-                        element={<frontendRoute.element />}
+                        // path={adminRoute.path}
+                        path={adminRoute.path}
+                        exact={adminRoute.exact}
+                        name={adminRoute.name}
+                        element={<adminRoute.element />}
                     />
                 );
             })}

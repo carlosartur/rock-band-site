@@ -10,6 +10,7 @@ import {
   cilCog,
 } from '@coreui/icons';
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react';
+import { NavItem } from 'react-bootstrap';
 
 const _nav = [
   {
