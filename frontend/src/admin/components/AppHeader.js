@@ -48,24 +48,6 @@ const AppHeader = () => {
           </CNavItem>
         </CHeaderNav>
 
-        {/* <CHeaderNav>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
-          </CNavItem>
-        </CHeaderNav> */}
-
         <CHeaderNav className='ms-3'>
           <AppHeaderDropdown />
         </CHeaderNav>

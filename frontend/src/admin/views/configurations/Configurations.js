@@ -374,7 +374,7 @@ const Configurations = () => {
                     role='group'
                     aria-label='Ações de Configurations'
                   >
-                    <CButton type='submit' disabled={loading}>
+                    <CButton type='submit' disabled={loading} color='primary'>
                       {loading ? (
                         <CSpinner
                           component='span'

@@ -422,7 +422,7 @@ const Newsletter = () => {
               <CCardFooter>
                 <CCol xs={12} align='right'>
                   <CButtonGroup role='group' aria-label='Ações de Newsletter'>
-                    <CButton type='submit' disabled={loading}>
+                    <CButton type='submit' disabled={loading} color='primary'>
                       {loading ? (
                         <CSpinner
                           component='span'
