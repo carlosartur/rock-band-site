@@ -31,8 +31,8 @@ import { PaginationFromData } from '../../components/PaginationComponent';
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
-import { BrazilianFormatData } from '../../../components/BrazilianFormatData';
-import '../../../scss/show_input_controls.scss';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
+import '../../scss/show_input_controls.scss';
 
 const SearchResultsTable = (searchResponse) => {
   const { searchResults, onClickPagination, onClickDelete } = searchResponse;

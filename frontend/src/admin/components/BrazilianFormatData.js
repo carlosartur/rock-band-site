@@ -1,5 +1,5 @@
 import React from 'react';
-import Debug from '../frontend/src/Components/Debug/Debug';
+import Debug from '../../Components/Debug/Debug';
 
 export const BrazilianFormatData = ({ date, hour, showTime = true }) => {
   if (!date) {

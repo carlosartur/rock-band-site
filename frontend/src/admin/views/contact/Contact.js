@@ -34,9 +34,9 @@ import { PaginationFromData } from '../../components/PaginationComponent';
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
-import { BrazilianFormatData } from '../../../components/BrazilianFormatData';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 import { Caret } from '../../components/Caret';
-import { handleCsvExport } from '../../../utils/exportcsv';
+import { handleCsvExport } from '../../utils/exportcsv';
 
 const SearchResultsTable = (searchResponse) => {
   const {

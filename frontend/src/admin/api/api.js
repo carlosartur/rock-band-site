@@ -7,25 +7,41 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
+
+const addCsrfTokenToConfig = config => {
   const csrfToken = Cookies.get('XSRF-TOKEN');
-  if (csrfToken) {
-    config.headers['X-XSRF-TOKEN'] = csrfToken;
-    
-    if (config.method === 'post' || config.method === 'put' || config.method === 'patch') {
-      config.data = {
-        ...config.data,
-        _token: csrfToken,
-      };
-    }
+
+  if (!csrfToken) {
+    return config;
   }
+
+  config.headers['X-XSRF-TOKEN'] = csrfToken;
+
+  if (!['post', 'put', 'patch', 'delete'].includes(config.method)) {
+    return config;
+  }
+  
+  if (!(config.data instanceof FormData)) {
+    config.data = {
+      ...config.data,
+      _token: csrfToken,
+    };
+
+    return config;
+  }
+  
+  config.data.append('_token', csrfToken);
+  return config;
+};
+
+api.interceptors.request.use((config) => {
+
+  config = addCsrfTokenToConfig(config);
 
   const token = Cookies.get('token');
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`;
   }
-
-  console.log(config)
 
   return config;
 });

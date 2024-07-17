@@ -2,7 +2,7 @@
 const Home = (props) => {
   
     return (
-      <span>Home</span>
+      <span>Home {Math.random()}</span>
     )
 }
 

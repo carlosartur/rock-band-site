@@ -35,6 +35,14 @@ Route::get('/csrf-token', function () {
     return Response::json(['csrf_token' => csrf_token()]);
 });
 
+/** Front-end routes */
+Route::prefix('admin')->group(function () {
+    Route::controller(StatesController::class)->prefix('states')->group(function () {
+        Route::get('/cities/{id}', 'getAllCities');
+        Route::get('/get-by-postcode/{postcode}', 'getCityAndStateByPostcode');
+    });
+});
+
 Route::prefix('admin')->middleware('auth:jwt')->group(function () {
 
     Route::get('/get-csrf-token', function (Request $request) {

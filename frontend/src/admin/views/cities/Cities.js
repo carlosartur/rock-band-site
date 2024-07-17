@@ -26,13 +26,13 @@ import {
 } from '@coreui/react';
 import api from '../../api/api';
 import React, { useEffect, useRef, useState } from 'react';
-import { CFormInputWithMask } from '../../../components/CFormInputWithMask';
 import { PaginationFromData } from '../../components/PaginationComponent';
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
 import { Caret } from '../../components/Caret';
-import { handleCsvExport } from '../../../utils/exportcsv';
+import { CFormInputWithMask } from '../../components/CFormInputWithMask';
+import { handleCsvExport } from '../../utils/exportcsv';
 
 function formatPostCode(postcode) {
   postcode = String(postcode);

@@ -34,8 +34,8 @@ import { PaginationFromData } from '../../components/PaginationComponent';
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
-import { handleCsvExport } from '../../../utils/exportcsv';
-import { BrazilianFormatData } from '../../../components/BrazilianFormatData';
+import { handleCsvExport } from '../../utils/exportcsv';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 
 const SearchResultsTable = (searchResponse) => {
   const { searchResults, onClickPagination, onClickDelete } = searchResponse;

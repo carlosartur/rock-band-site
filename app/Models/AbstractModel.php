@@ -55,4 +55,22 @@ abstract class AbstractModel extends Model
     {
         return (new static())->table;
     }
+
+    /**
+     * Handle each line of csv
+     *
+     * @return self
+     */
+    public function handleCsvItem(): self
+    {
+        if ($this->criado_em) {
+            $this->criado_em = (new DateTime($this->criado_em))->format("d/m/Y H:i:s");
+        }
+
+        if ($this->atualizado_em) {
+            $this->atualizado_em = (new DateTime($this->atualizado_em))->format("d/m/Y H:i:s");
+        }
+
+        return $this;
+    }
 }

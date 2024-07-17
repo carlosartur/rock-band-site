@@ -32,9 +32,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as icon from '@coreui/icons';
 import { AuthComponent } from '../../components/AuthComponent';
-import { EditorComponent } from '../../../components/EditorComponent';
+import { EditorComponent } from '../../components/EditorComponent';
 import { PaginationFromData } from '../../components/PaginationComponent';
-import { BrazilianFormatData } from '../../../components/BrazilianFormatData';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 
 const ConfigurationsForm = () => {
   const { search } = useLocation();

@@ -105,12 +105,18 @@ const GalleryForm = () => {
         formDataToSend.append(`file[${index}]`, file);
       });
 
+      console.log(formDataToSend, formData)
+
+      for (let pair of formDataToSend.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]);
+      }
+
       const response = await api.post(
         `${process.env.REACT_APP_API_URL}/admin/gallery`,
         formDataToSend,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'multipart/form-data',
           },
         }
       );

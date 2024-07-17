@@ -36,8 +36,8 @@ import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
 import { Caret } from '../../components/Caret';
-import { handleCsvExport } from '../../../utils/exportcsv';
-import { BrazilianFormatData } from '../../../components/BrazilianFormatData';
+import { handleCsvExport } from '../../utils/exportcsv';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 
 const SearchResultsTable = (searchResponse) => {
   const {

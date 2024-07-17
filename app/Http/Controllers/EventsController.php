@@ -84,28 +84,14 @@ class EventsController extends Controller implements CrudControllerInterface
                 : new Events();
 
             $events->name = $request->input('name');
-            $events->conditions = $request->input('conditions');
             $events->organizer = $request->input('organizer');
             $events->date_start = $request->input('date_start');
-            $events->date_end = $request->input('date_end');
             $events->enabled = $request->input('enabled');
             $events->city_id = $request->input('city_id');
 
             $events->setDates();
             
             $events->save();
-
-            GalleryEvents::where('event_id', $events->id)->delete();
-
-            foreach($request->input('photos', []) as $photo) {
-                $photo = (object) $photo;
-
-                $newPhoto = new GalleryEvents();
-                $newPhoto->event_id = $events->id;
-                $newPhoto->gallery_id = $photo->id;
-                $newPhoto->setDates();
-                $newPhoto->save();
-            }
 
             return response()->json(['message' => 'Success!', 'data' => $events], $request->isMethod('post') ? 201 : 200);
         } catch (Throwable $throwable) {
@@ -169,7 +155,6 @@ class EventsController extends Controller implements CrudControllerInterface
             "name" => "required|max:255",
             "organizer" => "required|max:255",
             "date_start" => "required",
-            "date_end" => "required",
             "enabled" => "required|max:1",
             "city_id" => "required|max:20",
         ])->validate();

@@ -35,9 +35,9 @@ import { PaginationFromData } from '../../components/PaginationComponent';
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
-import { BrazilianFormatData } from '../../../components/BrazilianFormatData';
 import { Caret } from '../../components/Caret';
-import { handleCsvExport } from '../../../utils/exportcsv';
+import { handleCsvExport } from '../../utils/exportcsv';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 
 const SearchResultsTable = (searchResponse) => {
   const {
@@ -75,15 +75,8 @@ const SearchResultsTable = (searchResponse) => {
               scope='col'
               onClick={() => onClickSort('date_start')}
             >
-              Data início
+              Data
               <Caret sortData={sortData} columnName='date_start'></Caret>
-            </CTableHeaderCell>
-            <CTableHeaderCell
-              scope='col'
-              onClick={() => onClickSort('date_end')}
-            >
-              Data fim
-              <Caret sortData={sortData} columnName='date_end'></Caret>
             </CTableHeaderCell>
             <CTableHeaderCell scope='col'>Habilitado</CTableHeaderCell>
             <CTableHeaderCell scope='col'>Cidade</CTableHeaderCell>
@@ -120,10 +113,7 @@ const SearchResultsTable = (searchResponse) => {
               <CTableDataCell>{item.name}</CTableDataCell>
               <CTableDataCell>{item.organizer}</CTableDataCell>
               <CTableDataCell>
-                <BrazilianFormatData date={item.date_start} />
-              </CTableDataCell>
-              <CTableDataCell>
-                <BrazilianFormatData date={item.date_end} />
+                <BrazilianFormatData date={item.date_start} showTime={false} />
               </CTableDataCell>
               <CTableDataCell>{item.enabled ? 'Sim' : 'Não'}</CTableDataCell>
               <CTableDataCell>{item.city.name}</CTableDataCell>

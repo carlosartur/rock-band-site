@@ -50,6 +50,7 @@ class GalleryController extends Controller implements CrudControllerInterface
     public function store(Request $request, null|string|int $primaryKey = null): JsonResponse
     {
         try {
+            // dd("oiu");
             $this->validateRequest($request);
 
             $primaryKey ??= $request->input('id', false);

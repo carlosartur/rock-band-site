@@ -24,7 +24,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as icon from '@coreui/icons';
 import { AuthComponent } from '../../components/AuthComponent';
-import { CFormInputWithMask } from '../../../components/CFormInputWithMask';
+import { CFormInputWithMask } from '../../components/CFormInputWithMask';
 
 const ContactInfoForm = () => {
   const { search } = useLocation();
