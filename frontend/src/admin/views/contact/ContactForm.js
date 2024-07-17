@@ -39,7 +39,6 @@ const ContactForm = () => {
     name: '',
     email: '',
     phone: '',
-    enterprise: '',
     subject: '',
     message: '',
     ip: '',
@@ -51,7 +50,6 @@ const ContactForm = () => {
     name: false,
     email: false,
     phone: false,
-    enterprise: false,
     subject: false,
     message: false,
     ip: false,
@@ -63,7 +61,6 @@ const ContactForm = () => {
     name: '',
     email: '',
     phone: '',
-    enterprise: '',
     subject: '',
     message: '',
     ip: '',
@@ -199,7 +196,7 @@ const ContactForm = () => {
                   name='id'
                 ></CFormInput>
 
-                <CCol xs={4}>
+                <CCol xs={6}>
                   <CFormLabel htmlFor='name'>Nome</CFormLabel>
                   <CFormInput
                     invalid={invalidInputs.name}
@@ -214,7 +211,7 @@ const ContactForm = () => {
                     </CFormFeedback>
                   )}
                 </CCol>
-                <CCol xs={4}>
+                <CCol xs={6}>
                   <CFormLabel htmlFor='email'>Email</CFormLabel>
                   <CFormInput
                     invalid={invalidInputs.email}
@@ -230,7 +227,7 @@ const ContactForm = () => {
                     </CFormFeedback>
                   )}
                 </CCol>
-                <CCol xs={4}>
+                <CCol xs={6}>
                   <CFormLabel htmlFor='phone'>Telefone</CFormLabel>
                   <CFormInputWithMask
                     mask={[
@@ -246,21 +243,6 @@ const ContactForm = () => {
                   {invalidInputs.phone && (
                     <CFormFeedback invalid={invalidInputs.phone}>
                       {invalidInputsMessages.phone}
-                    </CFormFeedback>
-                  )}
-                </CCol>
-                <CCol xs={6}>
-                  <CFormLabel htmlFor='enterprise'>Empresa</CFormLabel>
-                  <CFormInput
-                    invalid={invalidInputs.enterprise}
-                    value={formData.enterprise}
-                    onChange={handleChange}
-                    id='enterprise'
-                    name='enterprise'
-                  ></CFormInput>
-                  {invalidInputs.enterprise && (
-                    <CFormFeedback invalid={invalidInputs.enterprise}>
-                      {invalidInputsMessages.enterprise}
                     </CFormFeedback>
                   )}
                 </CCol>

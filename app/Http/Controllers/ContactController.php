@@ -28,10 +28,6 @@ class ContactController extends Controller implements CrudControllerInterface
             'operator' => self::SEARCH_OPERATOR_LIKE,
         ],
         [
-            'name' => 'enterprise',
-            'operator' => self::SEARCH_OPERATOR_LIKE,
-        ],
-        [
             'name' => 'subject',
             'operator' => self::SEARCH_OPERATOR_LIKE,
         ],
@@ -51,7 +47,6 @@ class ContactController extends Controller implements CrudControllerInterface
             "contact.name as nome",
             "contact.email as email",
             "contact.phone as telefone",
-            "contact.enterprise as empresa",
             "contact.subject as assunto",
             "contact.message as mensagem",
             "contact.ip as ip",
@@ -81,7 +76,6 @@ class ContactController extends Controller implements CrudControllerInterface
             $contact->name = $request->input('name');
             $contact->email = $request->input('email');
             $contact->phone = $request->input('phone');
-            $contact->enterprise = $request->input('enterprise');
             $contact->subject = $request->input('subject');
             $contact->message = $request->input('message');
             $contact->ip = $request->input('ip');
@@ -128,7 +122,6 @@ class ContactController extends Controller implements CrudControllerInterface
             "name" => "required|max:512",
             "email" => "required|max:512|email:rfc,dns",
             "phone" => "max:512",
-            "enterprise" => "max:512",
             "subject" => "max:512",
             "message" => "required",
             "ip" => [

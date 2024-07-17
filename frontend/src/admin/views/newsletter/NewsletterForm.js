@@ -40,21 +40,18 @@ const NewsletterForm = () => {
     name: '',
     email: '',
     enabled: '',
-    state_id: '',
   });
 
   const [invalidInputs, setInvalidInputs] = useState({
     name: false,
     email: false,
     enabled: false,
-    state_id: false,
   });
 
   const [invalidInputsMessages, setInvalidInputsMessages] = useState({
     name: '',
     email: '',
     enabled: '',
-    state_id: '',
   });
 
   const toaster = useRef();
@@ -249,29 +246,6 @@ const NewsletterForm = () => {
                   {invalidInputs.enabled && (
                     <CFormFeedback invalid={invalidInputs.enabled}>
                       {invalidInputsMessages.enabled}
-                    </CFormFeedback>
-                  )}
-                </CCol>
-
-                <CCol xs={6}>
-                  <CFormLabel htmlFor='state_id'>Estado</CFormLabel>
-                  <CFormSelect
-                    aria-label='Estado'
-                    id='state_id'
-                    name='state_id'
-                    value={formData.state_id}
-                    onChange={handleChange}
-                  >
-                    <option value=''>Selecione um estado</option>
-                    {states.map((state) => (
-                      <option key={state.id} value={state.id}>
-                        {state.name} ({state.acronym})
-                      </option>
-                    ))}
-                  </CFormSelect>
-                  {invalidInputs.state_id && (
-                    <CFormFeedback invalid={invalidInputs.state_id}>
-                      {invalidInputsMessages.state_id}
                     </CFormFeedback>
                   )}
                 </CCol>

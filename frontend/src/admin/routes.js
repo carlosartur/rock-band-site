@@ -1,11 +1,19 @@
 import Home from "./Home";
 import Cities from "./views/cities/Cities";
+import Configurations from "./views/configurations/Configurations";
+import ConfigurationsForm from "./views/configurations/ConfigurationsForm";
+import Contact from "./views/contact/Contact";
+import ContactForm from "./views/contact/ContactForm";
 import ContactInfo from "./views/contact_info/ContactInfo";
 import ContactInfoForm from "./views/contact_info/ContactInfoForm";
 import Events from "./views/events/Events";
 import EventsForm from "./views/events/EventsForm";
 import Gallery from "./views/gallery/Gallery";
 import GalleryForm from "./views/gallery/GalleryForm";
+import Newsletter from "./views/newsletter/Newsletter";
+import NewsletterForm from "./views/newsletter/NewsletterForm";
+import Pages from "./views/pages/Pages";
+import PagesForm from "./views/pages/PagesForm";
 import Users from "./views/users/Users";
 import UsersForm from "./views/users/UsersForm";
 
@@ -20,10 +28,14 @@ const routes = [
     { path: '/contact-info-form', name: 'Informação de contato', element: ContactInfoForm },
     { path: '/gallery', name: 'Galeria', element: Gallery },
     { path: '/gallery-form', name: 'Galeria', element: GalleryForm },
-    { path: '/contact', name: 'Contatos', element: Home },
-    { path: '/newsletters', name: 'Newsletter', element: Home },
-    { path: '/configurations', name: 'Configurações', element: Home },
-    { path: '/pages', name: 'Páginas', element: Home },
+    { path: '/contact', name: 'Contatos', element: Contact },
+    { path: '/contact-form', name: 'Contatos', element: ContactForm },
+    { path: '/newsletters', name: 'Newsletter', element: Newsletter },
+    { path: '/newsletters-form', name: 'Newsletter', element: NewsletterForm },
+    { path: '/configurations', name: 'Configurações', element: Configurations },
+    { path: '/configurations-form', name: 'Configurações', element: ConfigurationsForm },
+    { path: '/pages', name: 'Configurações', element: Pages },
+    { path: '/pages-form', name: 'Configurações', element: PagesForm },
 ];
 
 export default routes;

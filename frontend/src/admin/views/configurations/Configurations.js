@@ -38,7 +38,7 @@ import { handleCsvExport } from '../../utils/exportcsv';
 import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 
 const SearchResultsTable = (searchResponse) => {
-  const { searchResults, onClickPagination, onClickDelete } = searchResponse;
+  const { searchResults, onClickPagination, onClickDelete, onClickSort } = searchResponse;
 
   if (!searchResults.total) {
     return <CAlert color='warning'>Nenhuma configuração econtrada</CAlert>;

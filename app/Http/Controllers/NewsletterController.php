@@ -28,33 +28,17 @@ class NewsletterController extends Controller implements CrudControllerInterface
             'name' => 'enabled',
             'operator' => self::SEARCH_OPERATOR_BOOLEAN,
         ],
-        [
-            'name' => 'state_id',
-            'operator' => self::SEARCH_OPERATOR_EQUAL,
-        ],
     ];
 
     public const EXPORT_INFO = [
-        'leftJoins' => [
-            [
-                'table' => 'states', 
-                'foreign_key' => 'newsletter.state_id', 
-                'condition' => '=', 
-                'table_key' => 'states.id'
-            ]
-        ],
         'select' => [
             "newsletter.id as id",
             "newsletter.name as nome",
             "newsletter.enabled as habilitado",
             "newsletter.created_at as criado_em",
-            "newsletter.updated_at as atualizado_em",
-            "states.name as estado",
-            "states.acronym as sigla_estado",
+            "newsletter.updated_at as atualizado_em"
         ]
     ];
-
-    public $with = ['state'];
 
     /**
      * Store a new record on "newsletter" table.
@@ -78,7 +62,6 @@ class NewsletterController extends Controller implements CrudControllerInterface
             $newsletter->email = $request->input('email');
             $newsletter->enabled = $request->input('enabled');
             $newsletter->disable_token = $newsletter->disable_token ?? Str::random(40);
-            $newsletter->state_id = $request->input('state_id');
                         
             $newsletter->setDates();
 
@@ -99,8 +82,7 @@ class NewsletterController extends Controller implements CrudControllerInterface
     public function search(Request $request): JsonResponse
     {
         $alias = Newsletter::getAlias();
-        $query = $this->searchFrom($request, $this->getQueryBuilder(), $alias)
-            ->with($this->with);
+        $query = $this->searchFrom($request, $this->getQueryBuilder(), $alias);
 
         $pagination = $query->paginate()
             ->onEachSide(1)
@@ -121,7 +103,6 @@ class NewsletterController extends Controller implements CrudControllerInterface
             "name" => "required|max:255",
             "email" => "required|max:255|email:rfc,dns",
             "enabled" => "max:1",
-            "state_id" => "max:20",
         ])->validate();
     }
 

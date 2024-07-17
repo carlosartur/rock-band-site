@@ -7,11 +7,6 @@ class Newsletter extends AbstractModel
 {
     protected $table = 'newsletter';
 
-    public function state(): BelongsTo
-    {
-        return $this->belongsTo(States::class, 'state_id', 'id');
-    }
-
     /**
      * Handle each line of csv
      *

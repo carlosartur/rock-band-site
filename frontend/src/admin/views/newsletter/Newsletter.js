@@ -75,7 +75,6 @@ const SearchResultsTable = (searchResponse) => {
               Habilitado
               <Caret sortData={sortData} columnName='enabled'></Caret>
             </CTableHeaderCell>
-            <CTableHeaderCell scope='col'>Estado</CTableHeaderCell>
             <CTableHeaderCell
               scope='col'
               style={{ width: '150px' }}
@@ -103,9 +102,6 @@ const SearchResultsTable = (searchResponse) => {
               <CTableDataCell>{item.name}</CTableDataCell>
               <CTableDataCell>{item.email}</CTableDataCell>
               <CTableDataCell>{item.enabled ? 'Sim' : 'Não'}</CTableDataCell>
-              <CTableDataCell>
-                {item.state ? item.state.name : '-'}
-              </CTableDataCell>
               <CTableDataCell>
                 <BrazilianFormatData date={item.created_at} />
               </CTableDataCell>
@@ -148,7 +144,6 @@ const SearchResultsTable = (searchResponse) => {
 };
 
 const Newsletter = () => {
-  const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [csvLoading, setCsvLoading] = useState(false);
   const [toastContent, setToastContent] = useState(false);
@@ -189,7 +184,6 @@ const Newsletter = () => {
     name: '',
     email: '',
     enabled: '',
-    state_id: '',
     order_by: 'id',
     order_by_direction: 'desc',
   });
@@ -290,15 +284,6 @@ const Newsletter = () => {
   };
 
   useEffect(() => {
-    api
-      .get(`${process.env.REACT_APP_API_URL}/admin/states/all`)
-      .then((response) => {
-        setStates(response.data);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar estados:', error);
-      });
-
     handleSubmit();
   }, []);
 
@@ -397,24 +382,6 @@ const Newsletter = () => {
                     <option value=''>Selecione</option>
                     <option value='1'>Sim</option>
                     <option value='0'>Não</option>
-                  </CFormSelect>
-                </CCol>
-
-                <CCol xs={4}>
-                  <CFormLabel htmlFor='state_id'>Estado</CFormLabel>
-                  <CFormSelect
-                    aria-label='Estado da cidade'
-                    id='state_id'
-                    name='state_id'
-                    value={formData.state_id}
-                    onChange={handleChange}
-                  >
-                    <option value=''>Selecione um estado</option>
-                    {states.map((state) => (
-                      <option key={state.id} value={state.id}>
-                        {state.name} ({state.acronym})
-                      </option>
-                    ))}
                   </CFormSelect>
                 </CCol>
               </CCardBody>

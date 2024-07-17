@@ -70,13 +70,6 @@ const SearchResultsTable = (searchResponse) => {
             </CTableHeaderCell>
             <CTableHeaderCell
               scope='col'
-              onClick={() => onClickSort('enterprise')}
-            >
-              Empresa
-              <Caret sortData={sortData} columnName='enterprise'></Caret>
-            </CTableHeaderCell>
-            <CTableHeaderCell
-              scope='col'
               onClick={() => onClickSort('subject')}
             >
               Assunto
@@ -106,7 +99,6 @@ const SearchResultsTable = (searchResponse) => {
               />
               <CTableDataCell>{item.name}</CTableDataCell>
               <CTableDataCell>{item.email}</CTableDataCell>
-              <CTableDataCell>{item.enterprise}</CTableDataCell>
               <CTableDataCell>{item.subject}</CTableDataCell>
               <CTableDataCell>{item.message_raw}</CTableDataCell>
 
@@ -399,9 +391,6 @@ const Contact = () => {
           <strong>Email</strong>:&nbsp;
           <span>{detailsModalData.item.email}</span>
           <br />
-          <strong>Empresa</strong>:&nbsp;
-          <span>{detailsModalData.item.enterprise}</span>
-          <br />
           <strong>Assunto</strong>:&nbsp;
           <span>{detailsModalData.item.subject}</span>
           <br />
@@ -474,15 +463,6 @@ const Contact = () => {
                     onChange={handleChange}
                     id='phone'
                     name='phone'
-                  ></CFormInput>
-                </CCol>
-                <CCol xs={4}>
-                  <CFormLabel htmlFor='enterprise'>Empresa</CFormLabel>
-                  <CFormInput
-                    value={formData.enterprise}
-                    onChange={handleChange}
-                    id='enterprise'
-                    name='enterprise'
                   ></CFormInput>
                 </CCol>
                 <CCol xs={4}>
