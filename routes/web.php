@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BandMemberController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ConfigurationsController;
 use App\Http\Controllers\ContactController;
@@ -146,6 +147,14 @@ Route::prefix('admin')->middleware('auth:jwt')->group(function () {
         Route::get('/export-to-csv', 'exportToCsv');
         Route::get('/', 'search');
         Route::get('/{id}', 'getOneById')->where('id', '[0-9]+');;
+        Route::put('/{id?}', 'store');
+        Route::post('/', 'store');
+        Route::delete('/', 'delete');
+    });
+
+    Route::controller(BandMemberController::class)->prefix('band_member')->group(function () {
+        Route::get('/', 'search');
+        Route::get('/{id}', 'getOneById');
         Route::put('/{id?}', 'store');
         Route::post('/', 'store');
         Route::delete('/', 'delete');
