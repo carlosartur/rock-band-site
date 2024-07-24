@@ -1,6 +1,8 @@
 # Use the official Node.js image as the base image
 FROM node:18-alpine
 
+RUN apk update && apk add git
+
 # Set the working directory inside the container
 WORKDIR /app
 

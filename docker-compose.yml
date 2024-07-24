@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:latest
     restart: always
-    container_name: cartel-de-khali-db
+    container_name: clan-de-khali-db
     environment:
       MYSQL_ROOT_PASSWORD: root
     ports:
@@ -22,7 +22,7 @@ services:
       timeout: 20s
       retries: 10
   react-app:
-    container_name: cartel-de-khali-front
+    container_name: clan-de-khali-front
     build: ./frontend
     image: node:18-alpine
     ports:
@@ -36,7 +36,7 @@ services:
   app:
     image: ubuntu:latest
     # For different app you can use different names. (eg: )
-    container_name: cartel-de-khali-back
+    container_name: clan-de-khali-back
     build: .
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -56,10 +56,10 @@ services:
     networks:
       - shared
     environment:
-      MYSQL_ROOT_PASSWORD: cartel-de-khali
+      MYSQL_ROOT_PASSWORD: clan-de-khali
       MYSQL_DATABASE: database
       MYSQL_USER: user
-      MYSQL_PASSWORD: cartel-de-khali
+      MYSQL_PASSWORD: clan-de-khali
 
 volumes:
   db_data: {}

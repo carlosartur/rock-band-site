@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { CsrfProvider } from './admin/context/CsrfContext';
+import { ThemeProvider, useTheme } from '@material-tailwind/react';
+//import { Button } from "@material-tailwind/react";
 
 const initialState = {
   sidebarShow: true,
@@ -23,17 +25,17 @@ const changeState = (state = initialState, { type, ...rest }) => {
 const store = createStore(changeState);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <Provider store={store}>
-    <CsrfProvider>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </CsrfProvider>
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <CsrfProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </CsrfProvider>
+    </Provider>
+  </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
