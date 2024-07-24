@@ -13,6 +13,8 @@ class CitiesSeeder extends Seeder
      */
     public function run(): void
     {
+        (new StatesSeeder())->run();
+
         $cities = json_decode(file_get_contents(__DIR__ . "/cities.json"));
 
         foreach ($cities as $city) {
