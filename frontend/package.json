@@ -8,6 +8,7 @@
     "@coreui/icons-react": "^2.2.1",
     "@coreui/react": "^5.1.0",
     "@coreui/react-chartjs": "^3.0.0",
+    "@coreui/utils": "^2.0.2",
     "@material-tailwind/react": "^2.1.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

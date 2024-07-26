@@ -15,9 +15,7 @@ const BandMember = ({photoSrc, name, position, description}) => {
       <Typography color="blue-gray" className="font-medium" textGradient>
         {position}
       </Typography>
-      <Typography variant="lead" color="gray" className="mt-3 font-normal">
-        {description}
-      </Typography>
+      <Typography variant="lead" color="gray" className="mt-3 font-normal" dangerouslySetInnerHTML={{__html: description}} />
     </CardBody>
     {/* <CardFooter className="pt-0">
       <Button>Read More</Button>

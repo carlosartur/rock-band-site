@@ -1,4 +1,6 @@
+import BandMember from "./views/band_member/BandMember";
 import Home from "./Home";
+import BandMemberForm from "./views/band_member/BandMemberForm";
 import Cities from "./views/cities/Cities";
 import Configurations from "./views/configurations/Configurations";
 import ConfigurationsForm from "./views/configurations/ConfigurationsForm";
@@ -6,6 +8,7 @@ import Contact from "./views/contact/Contact";
 import ContactForm from "./views/contact/ContactForm";
 import ContactInfo from "./views/contact_info/ContactInfo";
 import ContactInfoForm from "./views/contact_info/ContactInfoForm";
+import Dashboard from "./views/dashboard/Dashboard";
 import Events from "./views/events/Events";
 import EventsForm from "./views/events/EventsForm";
 import Gallery from "./views/gallery/Gallery";
@@ -19,6 +22,7 @@ import UsersForm from "./views/users/UsersForm";
 
 const routes = [
     { path: '/', name: 'Home', element: Home },
+    { path: '/dashboard', name: 'Dashboard', element: Dashboard },
     { path: '/users', name: 'Usuários', element: Users },
     { path: '/users-form', name: 'Usuários', element: UsersForm },
     { path: '/cities', name: 'Cidades', element: Cities },
@@ -36,6 +40,8 @@ const routes = [
     { path: '/configurations-form', name: 'Configurações', element: ConfigurationsForm },
     { path: '/pages', name: 'Configurações', element: Pages },
     { path: '/pages-form', name: 'Configurações', element: PagesForm },
+    { path: '/bandmember', name: 'Integrante da banda', element: BandMember },
+    { path: '/bandmember-form', name: 'Integrante da banda', element: BandMemberForm },
 ];
 
 export default routes;

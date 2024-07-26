@@ -1,20 +1,21 @@
 import { CAlert, CButton, CButtonGroup, CCard, CCardBody, CCardHeader, CCardFooter, CCol, CForm, CFormInput, CFormLabel, CRow, CSpinner, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CToaster, CToastClose, CToastBody, CToast } from '@coreui/react';
-import api from "../../../api/api";
 import React, { useEffect, useRef, useState } from 'react';
-import { CFormInputWithMask } from '../../../components/CFormInputWithMask';
-import { PaginationFromData } from '../../../components/PaginationComponent';
+import { CFormInputWithMask } from '../../components/CFormInputWithMask';
+import { PaginationFromData } from '../../components/PaginationComponent';
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { AuthComponent } from '../../../components/AuthComponent';
-import { Caret } from '../../../components/Caret';
-import { handleCsvExport } from '../../../utils/exportcsv';
+import { AuthComponent } from '../../components/AuthComponent';
+import { Caret } from '../../components/Caret';
+import { handleCsvExport } from '../../utils/exportcsv';
+import api from '../../api/api';
+import { BrazilianFormatData } from '../../components/BrazilianFormatData';
 
 const SearchResultsTable = searchResponse => {
-  const { searchResults, onClickPagination, onClickDelete } = searchResponse;
+  const { searchResults, onClickPagination, onClickDelete, onClickSort, sortData } = searchResponse;
 
   if (!searchResults.total) {
     return (
-      <CAlert color="warning">Nenhuma BandMember econtrada</CAlert>
+      <CAlert color="warning">Nenhum Membro da banda econtrado</CAlert>
     );
   }
 
@@ -24,12 +25,10 @@ const SearchResultsTable = searchResponse => {
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
-
-                           <CTableHeaderCell scope="col">name</CTableHeaderCell>
-                         <CTableHeaderCell scope="col">position</CTableHeaderCell>
-                         <CTableHeaderCell scope="col">description</CTableHeaderCell>
-                         <CTableHeaderCell scope="col">gallery_id</CTableHeaderCell>
-                            <CTableHeaderCell 
+            <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Posição</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Descrição</CTableHeaderCell>
+            <CTableHeaderCell 
               scope="col"
               style={{ width: '150px'}}
               onClick={ () => onClickSort("created_at") }
@@ -53,15 +52,14 @@ const SearchResultsTable = searchResponse => {
           {searchResults.data.map((item, index) => <CTableRow key={index}>
             <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
             
-                           <CTableDataCell>{item.name}</CTableDataCell>
-                         <CTableDataCell>{item.position}</CTableDataCell>
-                         <CTableDataCell>{item.description}</CTableDataCell>
-                         <CTableDataCell>{item.gallery_id}</CTableDataCell>
-                            <CTableDataCell><BrazilianFormatData date={item.created_at}/></CTableDataCell>
+            <CTableDataCell>{item.name}</CTableDataCell>
+            <CTableDataCell>{item.position}</CTableDataCell>
+            <CTableDataCell>{item.description}</CTableDataCell>
+            <CTableDataCell><BrazilianFormatData date={item.created_at}/></CTableDataCell>
             <CTableDataCell><BrazilianFormatData date={item.updated_at}/></CTableDataCell>
             <CTableDataCell>              
-              <CButtonGroup role="group" aria-label="Ações de BandMember">
-                <CButton color="primary" href={`#/admin/band_member-form?id=${item.id}`}><CIcon icon={icon.cilPencil} size="lg"/></CButton>
+              <CButtonGroup role="group" aria-label="Ações de Membro da banda">
+                <CButton color="primary" href={`#/admin/bandmember-form?id=${item.id}`}><CIcon icon={icon.cilPencil} size="lg"/></CButton>
                 
                 <CButton 
                   color="danger" 
@@ -117,11 +115,11 @@ const BandMember = () => {
   };
 
   const [formData, setFormData] = useState({
-           name: '',
-         position: '',
-         description: '',
-         gallery_id: '',
-            order_by: 'id',
+    name: '',
+    position: '',
+    description: '',
+    gallery_id: '',
+    order_by: 'id',
     order_by_direction: 'asc',
   });
 
@@ -208,7 +206,7 @@ const BandMember = () => {
       console.error(error);
 
       lauchToast({
-        message: 'Falha na exclusão de BandMember.',
+        message: 'Falha na exclusão de Membro da banda.',
         color: 'danger',
         visible: true,
       });
@@ -246,10 +244,10 @@ const BandMember = () => {
 
       <CModal alignment="center" visible={deleteModalData.visible} onClose={() => setDeleteModalData({visible: false})}>
         <CModalHeader>
-          <CModalTitle>Excluir BandMember {deleteModalData.name}</CModalTitle>
+          <CModalTitle>Excluir Membro da banda {deleteModalData.name}</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          Tem certeza que deseja excluir a BandMember {deleteModalData.name}? Essa ação não pode ser desfeita!
+          Tem certeza que deseja excluir a Membro da banda {deleteModalData.name}? Essa ação não pode ser desfeita!
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setDeleteModalData({visible: false})}>
@@ -267,21 +265,11 @@ const BandMember = () => {
           <CCard className="mb-4">
             <CForm onSubmit={handleSubmit} className="g-3">  
               <CCardHeader>
-                <strong>BandMember</strong> <small>Busca</small>
+                <strong>Membro da banda</strong> <small>Busca</small>
               </CCardHeader>
               <CCardBody className='row'>
-              
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="id">id</CFormLabel>
-                  <CFormInput 
-                    value={formData.id} 
-                    onChange={handleChange} 
-                    id="id"
-                    name="id">
-                  </CFormInput>
-                </CCol>
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="name">name</CFormLabel>
+                <CCol xs={4}>
+                  <CFormLabel htmlFor="name">Nome</CFormLabel>
                   <CFormInput 
                     value={formData.name} 
                     onChange={handleChange} 
@@ -289,8 +277,8 @@ const BandMember = () => {
                     name="name">
                   </CFormInput>
                 </CCol>
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="position">position</CFormLabel>
+                <CCol xs={4}>
+                  <CFormLabel htmlFor="position">Posição</CFormLabel>
                   <CFormInput 
                     value={formData.position} 
                     onChange={handleChange} 
@@ -298,8 +286,8 @@ const BandMember = () => {
                     name="position">
                   </CFormInput>
                 </CCol>
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="description">description</CFormLabel>
+                <CCol xs={4}>
+                  <CFormLabel htmlFor="description">Descrição</CFormLabel>
                   <CFormInput 
                     value={formData.description} 
                     onChange={handleChange} 
@@ -307,40 +295,13 @@ const BandMember = () => {
                     name="description">
                   </CFormInput>
                 </CCol>
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="gallery_id">gallery_id</CFormLabel>
-                  <CFormInput 
-                    value={formData.gallery_id} 
-                    onChange={handleChange} 
-                    id="gallery_id"
-                    name="gallery_id">
-                  </CFormInput>
-                </CCol>
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="created_at">created_at</CFormLabel>
-                  <CFormInput 
-                    value={formData.created_at} 
-                    onChange={handleChange} 
-                    id="created_at"
-                    name="created_at">
-                  </CFormInput>
-                </CCol>
-                              <CCol xs={4}>
-                  <CFormLabel htmlFor="updated_at">updated_at</CFormLabel>
-                  <CFormInput 
-                    value={formData.updated_at} 
-                    onChange={handleChange} 
-                    id="updated_at"
-                    name="updated_at">
-                  </CFormInput>
-                </CCol>
-              
+
               </CCardBody>
 
               <CCardFooter>
                 <CCol xs={12} align="right">
-                  <CButtonGroup role="group" aria-label="Ações de BandMember">
-                    <CButton type="submit" disabled={loading}>
+                  <CButtonGroup role="group" aria-label="Ações de Membro da banda">
+                    <CButton type="submit" disabled={loading} color='primary'>
                       {loading ? (
                         <CSpinner component="span" size="sm" aria-hidden="true" />
                       ): (
@@ -358,7 +319,7 @@ const BandMember = () => {
                       &nbsp;
                       Exportar planilha
                     </CButton>
-                    <CButton href='#/admin/band_member-form' color="success">
+                    <CButton href='#/admin/bandmember-form' color="success">
                       <CIcon icon={icon.cilPlus} size="lg"/>
                       &nbsp;
                       Adicionar

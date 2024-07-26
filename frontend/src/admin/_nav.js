@@ -91,6 +91,12 @@ const _nav = [
     to: '/admin/pages',
     icon: <CIcon icon={cilNewspaper} customClassName='nav-icon' />,
   },
+  {
+    component: CNavItem,
+    name: 'Membro da banda',
+    to: '/admin/bandmember',
+    icon: <CIcon icon={cilUser} customClassName='nav-icon' />,
+  },
 ];
 
 export default _nav;

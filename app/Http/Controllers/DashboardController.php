@@ -17,7 +17,7 @@ class DashboardController extends Controller
             $responseData = [
                 new DashboardCardResponse($this->getDataToCard("Contact")),
                 new DashboardCardResponse($this->getDataToCard("Newsletter")),
-                new DashboardCardResponse($this->getDataToCard("Reservations")),
+                new DashboardCardResponse($this->getDataToCard("Access")),
             ];
             
             return response()->json(['message' => 'Success!', 'data' => $responseData]);
@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $query = DB::table(match ($type) {
             'Contact' => 'contact',
             'Newsletter' => 'newsletter',
-            'Reservations' => 'reservations',
+            'Access' => 'access_logs',
         });
 
         $total = $query->count();
@@ -53,7 +53,7 @@ class DashboardController extends Controller
             'title' => match ($type) {
                 'Contact' => 'Contatos',
                 'Newsletter' => 'Newsletters',
-                'Reservations' => 'Reservas',
+                'Access' => 'Acessos',
             }
         ];
     }

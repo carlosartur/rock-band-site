@@ -1,10 +1,12 @@
 import CIcon from "@coreui/icons-react";
-import { CButton, CButtonGroup, CCard, CCardBody, CCardFooter, CCardHeader, CCol, CForm, CFormFeedback, CFormInput, CFormLabel, CRow, CSpinner, CToast, CToastBody, CToastClose, CToaster } from "@coreui/react";
-import api from "../../../api/api";
+import { CAlert, CButton, CButtonGroup, CCard, CCardBody, CCardFooter, CCardHeader, CCardImage, CCol, CForm, CFormFeedback, CFormInput, CFormLabel, CRow, CSpinner, CToast, CToastBody, CToastClose, CToaster } from "@coreui/react";
+import api from "../../api/api";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as icon from '@coreui/icons';
-import { AuthComponent } from '../../../components/AuthComponent';
+import { AuthComponent } from '../../components/AuthComponent';
+import { EditorComponent } from "../../components/EditorComponent";
+import GalleryImageSelector from "../../components/GalleryImageSelector";
 
 const BandMemberForm = () => {
     const { search } = useLocation();
@@ -13,34 +15,38 @@ const BandMemberForm = () => {
     const [loading, setLoading] = useState(false);
 
     const [toastContent, setToastContent] = useState(false);
+    const [memberPhoto, setMemberPhoto] = useState('');
+    const [addPhotoModalData, setAddPhotoModalData] = useState({
+      visible: false,
+    });
 
     const [formData, setFormData] = useState({
       id,
-               name: '',
-             position: '',
-             description: '',
-             gallery_id: '',
-             created_at: '',
-             updated_at: '',
-          });
+      name: '',
+      position: '',
+      description: '',
+      gallery_id: '',
+      created_at: '',
+      updated_at: '',
+    });
 
     const [invalidInputs, setInvalidInputs] = useState({
-               name: false,
-             position: false,
-             description: false,
-             gallery_id: false,
-             created_at: false,
-             updated_at: false,
-          });
+      name: false,
+      position: false,
+      description: false,
+      gallery_id: false,
+      created_at: false,
+      updated_at: false,
+    });
     
     const [invalidInputsMessages, setInvalidInputsMessages] = useState({
-               name: '',
-             position: '',
-             description: '',
-             gallery_id: '',
-             created_at: '',
-             updated_at: '',
-          });
+      name: '',
+      position: '',
+      description: '',
+      gallery_id: '',
+      created_at: '',
+      updated_at: '',
+    });
 
     const toaster = useRef();
 
@@ -77,14 +83,14 @@ const BandMemberForm = () => {
         const response = await api.put(`${process.env.REACT_APP_API_URL}/admin/band_member`, formData);
 
         lauchToast({
-          message: 'BandMember editada com sucesso!',
+          message: 'Membro da banda editada com sucesso!',
           color: 'success',
           visible: true,
         });
 
         setLoading(false);
 
-        setTimeout(() => window.location.href = "#/admin/band_member", 1000);
+        setTimeout(() => window.location.href = "#/admin/bandmember", 1000);
         
       } catch (error) {
 
@@ -104,24 +110,28 @@ const BandMemberForm = () => {
         }
 
         lauchToast({
-          message: 'Erro ao salvar BandMember!',
+          message: 'Erro ao salvar Membro da banda!',
           color: 'danger',
           visible: true,
         });
 
         setLoading(false);
-        console.error('Erro ao salvar BandMember!', error);
+        console.error('Erro ao salvar Membro da banda!', error);
       }
     };
 
     useEffect(() => {
-      api.get(`${process.env.REACT_APP_API_URL}/admin/band_member/${id}`)
-        .then((response) => {
-          setFormData(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      if(id) {
+        api.get(`${process.env.REACT_APP_API_URL}/admin/band_member/${id}`)
+          .then((response) => {
+            setFormData(response.data);
+
+            setMemberPhoto(`/storage/${response.data.photo.path}`)
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     }, []);
 
     return (
@@ -129,13 +139,22 @@ const BandMemberForm = () => {
         <AuthComponent/>
 
         <CToaster ref={toaster} placement="top-end" push={toastContent}></CToaster>
+
+        <GalleryImageSelector 
+          visible={addPhotoModalData.visible} 
+          onSelectPhoto={ item => {
+            setMemberPhoto(item.path);
+            setFormData({ ...formData, gallery_id: item.id })
+          } } 
+          onCloseCallback={() => setAddPhotoModalData({visible: false}) }
+        />
         
         <CRow>
           <CCol xs={12}>
             <CForm onSubmit={handleSubmit} className="g-3">
               <CCard className="mb-4">
                 <CCardHeader>
-                  <strong>{ id ? "Editar" : "Nova" }</strong> <small>BandMember { id ? `#${id}` : "" }</small>
+                  <strong>{ id ? "Editar" : "Novo" }</strong> <small>Membro da banda { id ? `#${id}` : "" }</small>
                 </CCardHeader>
                 
                 <CCardBody>
@@ -147,8 +166,8 @@ const BandMemberForm = () => {
                     name="id">
                   </CFormInput>
                   
-                                     <CCol xs={12}>
-                    <CFormLabel htmlFor="name">name</CFormLabel>
+                  <CCol xs={12}>
+                    <CFormLabel htmlFor="name">Nome</CFormLabel>
                     <CFormInput 
                       invalid={invalidInputs.name}
                       value={formData.name}
@@ -158,8 +177,8 @@ const BandMemberForm = () => {
                     </CFormInput>
                     { invalidInputs.name && <CFormFeedback invalid={invalidInputs.name}>{invalidInputsMessages.name}</CFormFeedback> } 
                   </CCol>
-                                   <CCol xs={12}>
-                    <CFormLabel htmlFor="position">position</CFormLabel>
+                  <CCol xs={12}>
+                    <CFormLabel htmlFor="position">Posição</CFormLabel>
                     <CFormInput 
                       invalid={invalidInputs.position}
                       value={formData.position}
@@ -169,57 +188,85 @@ const BandMemberForm = () => {
                     </CFormInput>
                     { invalidInputs.position && <CFormFeedback invalid={invalidInputs.position}>{invalidInputsMessages.position}</CFormFeedback> } 
                   </CCol>
-                                   <CCol xs={12}>
-                    <CFormLabel htmlFor="description">description</CFormLabel>
-                    <CFormInput 
-                      invalid={invalidInputs.description}
-                      value={formData.description}
-                      onChange={handleChange} 
-                      id="description"
-                      name="description">
-                    </CFormInput>
+
+                  <CCol xs={12}>
+                    <CFormLabel htmlFor="description">Descrição</CFormLabel>
+
+                    <EditorComponent
+                      id='description'
+                      initialValue={formData.description}
+                      editorState={formData.description}
+                      setEditorState={(newEditorState) => {
+                        setFormData({ ...formData, description: newEditorState });
+                      }}
+                    />
                     { invalidInputs.description && <CFormFeedback invalid={invalidInputs.description}>{invalidInputsMessages.description}</CFormFeedback> } 
                   </CCol>
-                                   <CCol xs={12}>
-                    <CFormLabel htmlFor="gallery_id">gallery_id</CFormLabel>
-                    <CFormInput 
-                      invalid={invalidInputs.gallery_id}
-                      value={formData.gallery_id}
-                      onChange={handleChange} 
-                      id="gallery_id"
-                      name="gallery_id">
-                    </CFormInput>
-                    { invalidInputs.gallery_id && <CFormFeedback invalid={invalidInputs.gallery_id}>{invalidInputsMessages.gallery_id}</CFormFeedback> } 
-                  </CCol>
-                                   <CCol xs={12}>
-                    <CFormLabel htmlFor="created_at">created_at</CFormLabel>
-                    <CFormInput 
-                      invalid={invalidInputs.created_at}
-                      value={formData.created_at}
-                      onChange={handleChange} 
-                      id="created_at"
-                      name="created_at">
-                    </CFormInput>
-                    { invalidInputs.created_at && <CFormFeedback invalid={invalidInputs.created_at}>{invalidInputsMessages.created_at}</CFormFeedback> } 
-                  </CCol>
-                                   <CCol xs={12}>
-                    <CFormLabel htmlFor="updated_at">updated_at</CFormLabel>
-                    <CFormInput 
-                      invalid={invalidInputs.updated_at}
-                      value={formData.updated_at}
-                      onChange={handleChange} 
-                      id="updated_at"
-                      name="updated_at">
-                    </CFormInput>
-                    { invalidInputs.updated_at && <CFormFeedback invalid={invalidInputs.updated_at}>{invalidInputsMessages.updated_at}</CFormFeedback> } 
-                  </CCol>
                 
+                  <CCol xs={12}>
+                  <CFormLabel htmlFor='gallery_id'>Foto</CFormLabel>
+
+                  {formData.gallery_id ? (
+                    <CCard>
+                      <CCardImage
+                        orientation='top'
+                        src={`${process.env.REACT_APP_API_URL}${memberPhoto}`}
+                      />
+                      <CCardFooter>
+                        <CCol xs={12} align='right'>
+                          <CButton
+                            onClick={() =>
+                              setAddPhotoModalData({ visible: true })
+                            }
+                            color="primary"
+                          >
+                            <CIcon icon={icon.cilCamera} />
+                            &nbsp; Escolher outra foto
+                          </CButton>
+                        </CCol>
+                      </CCardFooter>
+                    </CCard>
+                  ) : (
+                    <CAlert color='warning'>
+                      <CRow>
+                        <CCol xs={6} align='left'>
+                          Nenhuma foto selecionada
+                        </CCol>
+                        <CCol xs={6} align='right'>
+                          <CButton
+                            onClick={() =>
+                              setAddPhotoModalData({ visible: true })
+                            }
+                            color='primary'
+                          >
+                            <CIcon icon={icon.cilCamera} />
+                            &nbsp; Escolher foto da galeria
+                          </CButton>
+                        </CCol>
+                      </CRow>
+                    </CAlert>
+                  )}
+
+                  <CFormInput
+                    invalid={invalidInputs.gallery_id}
+                    value={formData.gallery_id}
+                    onChange={handleChange}
+                    id='gallery_id'
+                    name='gallery_id'
+                    type='hidden'
+                  ></CFormInput>
+                  {invalidInputs.gallery_id && (
+                    <CFormFeedback invalid={invalidInputs.gallery_id}>
+                      {invalidInputsMessages.gallery_id}
+                    </CFormFeedback>
+                  )}
+                </CCol>
                 </CCardBody>
 
                 <CCardFooter>
                   <CCol xs={12} align="right">
-                    <CButtonGroup role="group" aria-label="Ações de BandMember">
-                      <CButton href="#/admin/band_member" color="warning">
+                    <CButtonGroup role="group" aria-label="Ações de Membro da banda">
+                      <CButton href="#/admin/bandmember" color="warning">
                         <CIcon icon={icon.cilX} />
                         &nbsp;
                         Cancelar

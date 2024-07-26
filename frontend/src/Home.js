@@ -1,31 +1,45 @@
 import { Col, Row } from 'react-bootstrap';
 import CountdownTimer from './CountdownTimer';
 import BandMember from './Components/Cards/BandMember';
+import { useEffect, useState } from 'react';
+import { chunk, getAllConfigurations } from './Utils/Utils';
+import Debug from './Components/Debug/Debug';
+import axios from 'axios';
 
 const Home = (props) => {
+  const [configurations, setConfigurations] = useState({});
+  const [bandMembers, setBandMembers] = useState([]);
+
+  const bandMemberPerLineMdScreen = 3;
+
+  useEffect(() => {
+    getAllConfigurations()
+      .then(data => {
+        setConfigurations(data);
+      })
+      .catch(err => console.error(err))
+
+    axios.get(`${process.env.REACT_APP_API_URL}/api/band-member/get-all`)
+      .then(data => {
+        setBandMembers(data.data.data);
+      })
+      .catch(err => console.error(err))
+
+  }, []);
+
   return (
     <>
-      
-      {/* <Button className="!px-8 uppercase">Button</Button> */}
       <Row className='text-center overflow-hidden'>
         <Col xs={1} md={4}></Col>
 
         <Col xs={10} md={4}>
           <div className="inline-block">
-            {/* <img src="./kali.svg" className="bg-white max-h-1/2 h-auto w-full" /> */}
             <img src="./logo-banda.png" className="max-h-[50vh] h-auto" />
           </div>
         </Col>
         
         <Col xs={1} md={4}></Col>
       </Row>
-      {/* <Row>
-        <Col xs={1} md={4}></Col>
-        <Col xs={10} md={4}>
-          <p className='text-white w-full text-4xl '>Cartel de Khali</p>
-        </Col>
-        <Col xs={1} md={4}></Col>
-      </Row> */}
       <Row>
         <Col xs={1} md={4}></Col>
         <Col xs={10} md={4}>
@@ -37,33 +51,35 @@ const Home = (props) => {
       </Row>
 
       <Row className='mx-md-3 mx-0'>
+        { bandMembers.length <= bandMemberPerLineMdScreen
+          ? bandMembers.map((bandMember, key) => {
 
-        {/* <Col xs={1} md={4}></Col> */}
-        <Col xs={12} md={4} className='my-md-3 my-10'>
-          <BandMember 
-            photoSrc="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-            name="Carlos Artur Gonçalves"
-            position="Baixo/Vocais"
-            description="Baixista, vocalista e desenvolvedor deste site"
-          />
-        </Col>
-        <Col xs={12} md={4} className='my-md-3 my-10'>
-          <BandMember 
-            photoSrc="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-            name="Yuri Lopes"
-            position="Guitarra/Vocais"
-            description="Guitarrista, vocalista"
-          />
-        </Col>
-        <Col xs={12} md={4} className='my-md-3 my-10'>
-          <BandMember 
-            photoSrc="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-            name="David Gardel"
-            position="Bateria/Percussão"
-            description="Baterista"
-          />
-        </Col>
-        {/* <Col xs={1} md={4}></Col> */}
+            let mdCol = Math.floor(12 / bandMembers.length)
+
+            return (<Col xs={12} md={mdCol} className='my-md-3 my-10' key={key}>
+              <BandMember 
+                photoSrc={`${process.env.REACT_APP_API_URL}/storage/${bandMember.photo.path}`}
+                name={bandMember.name}
+                position={bandMember.position}
+                description={bandMember.description}
+              />
+            </Col>)
+          })
+          : chunk(bandMembers, bandMemberPerLineMdScreen).map(bandMembersLine => {
+            return bandMembersLine.map((bandMember, key) => {
+              let mdCol = Math.floor(12 / bandMembersLine.length)
+
+              return (<Col xs={12} md={mdCol} className='my-md-3 my-10' key={key}>
+                <BandMember 
+                  photoSrc={`${process.env.REACT_APP_API_URL}/storage/${bandMember.photo.path}`}
+                  name={bandMember.name}
+                  position={bandMember.position}
+                  description={bandMember.description}
+                />
+              </Col>)
+            })
+          })
+        }
       </Row>
 
       

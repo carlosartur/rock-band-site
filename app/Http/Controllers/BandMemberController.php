@@ -14,36 +14,38 @@ class BandMemberController extends Controller implements CrudControllerInterface
 
     use CrudUtilitiesTrait;
 
+    public $with = ['photo'];
+
     public const FILTERABLE_FIELDS = [
-                [
+        [
             'name' => 'id',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-                [
+        [
             'name' => 'name',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-                [
+        [
             'name' => 'position',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-                [
+        [
             'name' => 'description',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-                [
+        [
             'name' => 'gallery_id',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-                [
+        [
             'name' => 'created_at',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-                [
+        [
             'name' => 'updated_at',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
-            ];
+    ];
 
     /**
      * Store a new record on "band_member" table.
@@ -55,7 +57,7 @@ class BandMemberController extends Controller implements CrudControllerInterface
     public function store(Request $request, null|string|int $primaryKey = null): JsonResponse
     {
         try {
-            $validator = $this->validateRequest($request);
+            $this->validateRequest($request);
 
             $primaryKey ??= $request->input('id', false);
 
@@ -63,10 +65,10 @@ class BandMemberController extends Controller implements CrudControllerInterface
                 ? $this->getQueryBuilder()->where("id", $primaryKey)->first()
                 : new BandMember();
 
-                           $band_member->name = $request->input('name');
-                         $band_member->position = $request->input('position');
-                         $band_member->description = $request->input('description');
-                         $band_member->gallery_id = $request->input('gallery_id');
+            $band_member->name = $request->input('name');
+            $band_member->position = $request->input('position');
+            $band_member->description = $request->input('description');
+            $band_member->gallery_id = $request->input('gallery_id');
                         
             $band_member->setDates();
 
@@ -105,12 +107,10 @@ class BandMemberController extends Controller implements CrudControllerInterface
     public function validateRequest(Request $request): array
     {
         return Validator::make($request->all(), [
-                                    "name" => "required|max:255",
-                                "position" => "required|max:255",
-                                "description" => "required",
-                                            "created_at" => "date",
-                                "updated_at" => "date",
-                    ])->validate();
+            "name" => "required|max:255",
+            "position" => "required|max:255",
+            "description" => "required",
+        ])->validate();
     }
 
     /**

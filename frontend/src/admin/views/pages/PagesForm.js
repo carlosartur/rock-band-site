@@ -457,6 +457,7 @@ const PagesForm = () => {
                     </CFormFeedback>
                   )}
                 </CCol>
+                
                 <CCol xs={12}>
                   <CFormLabel htmlFor='gallery_id'>Banner</CFormLabel>
 
@@ -490,6 +491,7 @@ const PagesForm = () => {
                             onClick={() =>
                               setAddPhotoModalData({ visible: true })
                             }
+                            color='primary'
                           >
                             <CIcon icon={icon.cilCamera} />
                             &nbsp; Escolher foto da galeria

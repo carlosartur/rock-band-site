@@ -62,7 +62,7 @@ const Login = () => {
           window.location.href = redirectTo;
           return;
         }
-        navigate('/dashboard');
+        navigate('/admin/dashboard');
       })
       .catch((err) => {
         lauchToast({
