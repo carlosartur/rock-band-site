@@ -28,6 +28,10 @@ class BandMemberController extends Controller implements CrudControllerInterface
         [
             'name' => 'position',
             'operator' => self::SEARCH_OPERATOR_EQUAL,
+        ],        
+        [
+            'name' => 'order',
+            'operator' => self::SEARCH_OPERATOR_EQUAL,
         ],
         [
             'name' => 'description',
@@ -69,6 +73,7 @@ class BandMemberController extends Controller implements CrudControllerInterface
             $band_member->position = $request->input('position');
             $band_member->description = $request->input('description');
             $band_member->gallery_id = $request->input('gallery_id');
+            $band_member->order = $request->input('order');
                         
             $band_member->setDates();
 

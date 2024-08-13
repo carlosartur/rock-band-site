@@ -10,7 +10,7 @@ const Home = (props) => {
   const [configurations, setConfigurations] = useState({});
   const [bandMembers, setBandMembers] = useState([]);
 
-  const bandMemberPerLineMdScreen = 3;
+  const bandMemberPerLineMdScreen = 2;
 
   useEffect(() => {
     getAllConfigurations()

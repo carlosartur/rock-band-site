@@ -157,7 +157,7 @@ const BandMemberForm = () => {
                   <strong>{ id ? "Editar" : "Novo" }</strong> <small>Membro da banda { id ? `#${id}` : "" }</small>
                 </CCardHeader>
                 
-                <CCardBody>
+                <CCardBody className="row">
                   <CFormInput
                     type="hidden"
                     value={formData.id} 
@@ -166,7 +166,7 @@ const BandMemberForm = () => {
                     name="id">
                   </CFormInput>
                   
-                  <CCol xs={12}>
+                  <CCol xs={4}>
                     <CFormLabel htmlFor="name">Nome</CFormLabel>
                     <CFormInput 
                       invalid={invalidInputs.name}
@@ -177,7 +177,7 @@ const BandMemberForm = () => {
                     </CFormInput>
                     { invalidInputs.name && <CFormFeedback invalid={invalidInputs.name}>{invalidInputsMessages.name}</CFormFeedback> } 
                   </CCol>
-                  <CCol xs={12}>
+                  <CCol xs={4}>
                     <CFormLabel htmlFor="position">Posição</CFormLabel>
                     <CFormInput 
                       invalid={invalidInputs.position}
@@ -187,6 +187,20 @@ const BandMemberForm = () => {
                       name="position">
                     </CFormInput>
                     { invalidInputs.position && <CFormFeedback invalid={invalidInputs.position}>{invalidInputsMessages.position}</CFormFeedback> } 
+                  </CCol>
+                  <CCol xs={4}>
+                    <CFormLabel htmlFor="position">Ordenação</CFormLabel>
+                    <CFormInput 
+                      invalid={invalidInputs.order}
+                      value={formData.order}
+                      onChange={handleChange} 
+                      id="order"
+                      name="order"
+                      type="number"
+                      min={0}
+                      step={1}>
+                    </CFormInput>
+                    { invalidInputs.order && <CFormFeedback invalid={invalidInputs.order}>{invalidInputsMessages.order}</CFormFeedback> } 
                   </CCol>
 
                   <CCol xs={12}>

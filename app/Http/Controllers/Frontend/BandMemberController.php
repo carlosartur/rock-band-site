@@ -7,6 +7,8 @@ use App\Models\BandMember;
 
 class BandMemberController extends Controller
 {
+    protected const GET_ALL_ORDER_BY = ['order', 'ASC'];
+
     public $with = ['photo'];
 
     /**

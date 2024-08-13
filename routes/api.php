@@ -22,5 +22,5 @@ Route::controller(ConfigurationsController::class)->prefix('config')->group(func
 });
 
 Route::controller(BandMemberController::class)->prefix('band-member')->group(function () {
-    Route::get('/get-all', 'getAll')->middleware([LogAccess::class]);
+    Route::get('/get-all', 'getAll')->middleware();
 });

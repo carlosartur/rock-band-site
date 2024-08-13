@@ -13,6 +13,8 @@ abstract class Controller extends BaseController
 {
     public $with = [];
 
+    protected const GET_ALL_ORDER_BY = [];
+
     /**
      * Get model to query
      * @return \App\Models\AbstractModel
@@ -32,6 +34,10 @@ abstract class Controller extends BaseController
 
             if ($this->with) {
                 $builder->with($this->with);
+            }
+
+            if (static::GET_ALL_ORDER_BY) {
+                call_user_func_array([$builder, 'orderBy'], static::GET_ALL_ORDER_BY); $builder->with($this->with);
             }
 
             $all = $builder->get();

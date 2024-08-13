@@ -9,6 +9,7 @@ import { Caret } from '../../components/Caret';
 import { handleCsvExport } from '../../utils/exportcsv';
 import api from '../../api/api';
 import { BrazilianFormatData } from '../../components/BrazilianFormatData';
+import { showDescriptionResume } from '../../../Utils/Utils';
 
 const SearchResultsTable = searchResponse => {
   const { searchResults, onClickPagination, onClickDelete, onClickSort, sortData } = searchResponse;
@@ -25,8 +26,24 @@ const SearchResultsTable = searchResponse => {
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Nome</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Posição</CTableHeaderCell>
+            <CTableHeaderCell scope="col" 
+              onClick={ () => onClickSort("name") }
+            >
+              Nome
+              <Caret sortData={sortData} columnName="name"></Caret>
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" 
+              onClick={ () => onClickSort("order") }
+            >
+              Ordenação
+              <Caret sortData={sortData} columnName="order"></Caret>
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col" 
+              onClick={ () => onClickSort("position") }
+            >
+              Posição
+              <Caret sortData={sortData} columnName="position"></Caret>
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Descrição</CTableHeaderCell>
             <CTableHeaderCell 
               scope="col"
@@ -53,8 +70,9 @@ const SearchResultsTable = searchResponse => {
             <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
             
             <CTableDataCell>{item.name}</CTableDataCell>
+            <CTableDataCell>{item.order}</CTableDataCell>
             <CTableDataCell>{item.position}</CTableDataCell>
-            <CTableDataCell>{item.description}</CTableDataCell>
+            <CTableDataCell>{showDescriptionResume(item.description, 100)}</CTableDataCell>
             <CTableDataCell><BrazilianFormatData date={item.created_at}/></CTableDataCell>
             <CTableDataCell><BrazilianFormatData date={item.updated_at}/></CTableDataCell>
             <CTableDataCell>              
