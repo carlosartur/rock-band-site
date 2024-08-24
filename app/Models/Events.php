@@ -10,23 +10,28 @@ class Events extends AbstractModel
 {
     protected $table = 'events';
 
+    /**
+     * City of event
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function city(): BelongsTo
     {
         return $this->belongsTo(Cities::class, 'city_id', 'id');
     }
 
-    public function photos(): HasManyThrough
+    /**
+     * Banner of event
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function banner(): BelongsTo
     {
-        return $this->hasManyThrough(
-            Gallery::class,
-            GalleryEvents::class,
-            'event_id', // Chave estrangeira da tabela intermediária
-            'id', // Chave primária da tabela de destino (Galery)
-            'id', // Chave primária da tabela de origem (Hotels)
-            'gallery_id' // Chave estrangeira da tabela de destino
-        );
+        return $this->belongsTo(Gallery::class, 'gallery_id', 'id');
     }
 
+    /**
+     * Get future events
+     * @return Collection|\Illuminate\Database\Eloquent\Builder[]
+     */
     public static function getFutureEvents(): ?Collection
     {
         $events = self::where(

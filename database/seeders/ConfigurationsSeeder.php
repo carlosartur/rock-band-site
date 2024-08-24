@@ -27,6 +27,11 @@ class ConfigurationsSeeder extends Seeder
             "type" => ConfigurationTypes::StringType->value,
             "hide_to_frontend" => true
         ],
+        [
+            'name' => "Página da seção quem somos da home",
+            'default_value' => "",
+            "type" => ConfigurationTypes::PageType->value,
+        ],
     ];
 
     /**

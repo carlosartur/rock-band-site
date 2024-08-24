@@ -1,11 +1,13 @@
 import CIcon from '@coreui/icons-react';
 import {
+  CAlert,
   CButton,
   CButtonGroup,
   CCard,
   CCardBody,
   CCardFooter,
   CCardHeader,
+  CCardImage,
   CCol,
   CForm,
   CFormFeedback,
@@ -26,6 +28,7 @@ import { useLocation } from 'react-router-dom';
 import * as icon from '@coreui/icons';
 import { AuthComponent } from '../../components/AuthComponent';
 import { EditorComponent } from '../../components/EditorComponent';
+import GalleryImageSelector from '../../components/GalleryImageSelector';
 
 const EventsForm = () => {
   const { search } = useLocation();
@@ -35,6 +38,10 @@ const EventsForm = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [loadingCities, setLoadingCities] = useState(false);
+  const [addPhotoModalData, setAddPhotoModalData] = useState({
+    visible: false,
+  });
+  const [bannerSrc, setBannerSrc] = useState('');
 
   const [toastContent, setToastContent] = useState(false);
 
@@ -205,6 +212,8 @@ const EventsForm = () => {
           };
 
           setFormData(newFormData);
+
+          setBannerSrc(`/storage/${response.data.banner.path}`);
         })
         .catch((error) => {
           console.error(error);
@@ -221,6 +230,15 @@ const EventsForm = () => {
         placement='top-end'
         push={toastContent}
       ></CToaster>
+
+      <GalleryImageSelector 
+        visible={addPhotoModalData.visible} 
+        onSelectPhoto={ item => {
+          setBannerSrc(item.path);
+          setFormData({ ...formData, gallery_id: item.id })
+        } } 
+        onCloseCallback={() => setAddPhotoModalData({visible: false}) }
+      />
 
       <CRow>
         <CCol xs={12}>
@@ -373,28 +391,70 @@ const EventsForm = () => {
                   )}
                 </CCol>
                 <CCol xs={12}>
-                  <CFormLabel htmlFor='conditions'>Descrição</CFormLabel>
+                  <CFormLabel htmlFor='description'>Descrição</CFormLabel>
 
                   <EditorComponent
-                    id='conditions'
-                    initialValue={formData.conditions}
-                    editorState={formData.conditions}
+                    id='description'
+                    initialValue={formData.description}
+                    editorState={formData.description}
                     setEditorState={(newEditorState) => {
-                      setFormData({ ...formData, conditions: newEditorState });
+                      setFormData({ ...formData, description: newEditorState });
                     }}
                   />
 
                   <CFormInput
-                    invalid={invalidInputs.conditions}
-                    value={formData.conditions}
+                    invalid={invalidInputs.description}
+                    value={formData.description}
                     onChange={handleChange}
-                    name='conditions'
+                    name='description'
                     type='hidden'
                   ></CFormInput>
-                  {invalidInputs.conditions && (
-                    <CFormFeedback invalid={invalidInputs.conditions}>
-                      {invalidInputsMessages.conditions}
+                  {invalidInputs.description && (
+                    <CFormFeedback invalid={invalidInputs.description}>
+                      {invalidInputsMessages.description}
                     </CFormFeedback>
+                  )}
+                </CCol>
+
+                <CCol xs={12} className='mt-2'>
+                  {formData.gallery_id ? (
+                      <CCard>
+                        <CCardImage
+                          orientation='top'
+                          src={`${process.env.REACT_APP_API_URL}${bannerSrc}`}
+                        />
+                        <CCardFooter>
+                          <CCol xs={12} align='right'>
+                            <CButton
+                              onClick={() =>
+                                setAddPhotoModalData({ visible: true })
+                              }
+                            >
+                              <CIcon icon={icon.cilCamera} />
+                              &nbsp; Escolher outra foto
+                            </CButton>
+                          </CCol>
+                        </CCardFooter>
+                      </CCard>
+                  ) : (
+                      <CAlert color='warning'>
+                        <CRow>
+                          <CCol xs={6} align='left'>
+                            Nenhum banner selecionado
+                          </CCol>
+                          <CCol xs={6} align='right'>
+                            <CButton
+                              onClick={() =>
+                                setAddPhotoModalData({ visible: true })
+                              }
+                              color='primary'
+                            >
+                              <CIcon icon={icon.cilCamera} />
+                              &nbsp; Escolher foto da galeria
+                            </CButton>
+                          </CCol>
+                        </CRow>
+                      </CAlert>
                   )}
                 </CCol>
               </CCardBody>

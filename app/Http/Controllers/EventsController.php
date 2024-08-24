@@ -15,7 +15,7 @@ class EventsController extends Controller implements CrudControllerInterface
 
     use CrudUtilitiesTrait;
 
-    public $with = ['city', 'city.state', 'city.state.cities', 'photos'];
+    public $with = ['city', 'city.state', 'city.state.cities', 'banner'];
 
     public const FILTERABLE_FIELDS = [
         [
@@ -85,9 +85,11 @@ class EventsController extends Controller implements CrudControllerInterface
 
             $events->name = $request->input('name');
             $events->organizer = $request->input('organizer');
+            $events->description = $request->input('description');
             $events->date_start = $request->input('date_start');
             $events->enabled = $request->input('enabled');
             $events->city_id = $request->input('city_id');
+            $events->gallery_id = $request->input('gallery_id');
 
             $events->setDates();
             

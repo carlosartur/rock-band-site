@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use stdClass;
@@ -80,7 +81,7 @@ class Pages extends AbstractModel
         $obj = new stdClass();
         $data = $this->buildBannerData();
 
-        $obj->img = $this->banner->getPhotoUrl(); //$data->bannerData->base64encoded;
+        $obj->img = $this->banner->getPhotoUrl();
         $obj->title = $data->title;
         $obj->content = $data->text_raw;
         $obj->price = "";
@@ -126,6 +127,24 @@ class Pages extends AbstractModel
         $blogPages->transform(fn(Pages $item) => $item->buildListData());
 
         return $blogPages;
+    }
+
+    public static function getEmptyPage(): stdClass
+    {
+        $date = (new DateTime())->format("Y-m-d H:i:s");
+
+        $emptyPage = new stdClass();
+        $emptyPage->id = 0;
+        $emptyPage->slug = "";
+        $emptyPage->title = "";
+        $emptyPage->text = "";
+        $emptyPage->home = 0;
+        $emptyPage->order = 0;
+        $emptyPage->gallery_id = null;
+        $emptyPage->created_at = $date;
+        $emptyPage->updated_at = $date;
+
+        return $emptyPage;
     }
 
 }

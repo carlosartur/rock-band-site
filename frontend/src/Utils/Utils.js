@@ -36,6 +36,32 @@ export const getAllConfigurations = async () => {
 };
 
 /**
+ * Returns a configuration by it's slug
+ * @returns {Object}
+ */
+export const getOneConfiguration = async (slug) => {
+    const configs = await getAllConfigurations();
+    for (let config of configs) {
+        if (config.slug === slug) {
+            return config;
+        }
+    }
+
+    console.log(`Configuration ${slug} not found.`);
+
+    return  {
+        "id": 0,
+        "name": slug,
+        "slug": slug,
+        "value": "",
+        "default_value": "",
+        "type": "text",
+        "value_translated": "",
+        "default_value_translated": ""
+    }
+};
+
+/**
  * Chunk a array in pieces of same size (or smaller if last piece haven't enought elements)
  * @param {Array} arr 
  * @param {Number} size 

@@ -5,7 +5,7 @@ const AppFooter = () => {
   return (
     <CFooter>
       <div>
-        Clã de Kali
+        Clan de Kali
         <span className='ms-1'>&copy; {(new Date()).getFullYear()} Carlos Artur.</span>
       </div>
     </CFooter>

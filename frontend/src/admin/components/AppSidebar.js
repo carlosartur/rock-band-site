@@ -12,6 +12,7 @@ import { AppSidebarNav } from './AppSidebarNav';
 
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
+import '../scss/sidebar.scss';
 
 // sidebar nav config
 import navigation from '../_nav';
@@ -30,16 +31,16 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible });
       }}
     >
-      <CSidebarBrand className='d-none d-md-flex p-4' to='/'>
+      <CSidebarBrand className='d-none d-md-flex p-4 bg-[#303C54]' to='/'>
         {/* { configs && configs['logo-principal-claro'] && <img src={`${process.env.REACT_APP_API_URL}${configs['logo-principal-claro']['value_translated']}`} /> } */}
       </CSidebarBrand>
-      <CSidebarNav>
+      <CSidebarNav className='bg-[#3C4B64]'>
         <SimpleBar>
           <AppSidebarNav items={navigation} />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler
-        className='d-none d-lg-flex'
+        className='d-none d-lg-flex bg-[#303C54]'
         onClick={() =>
           dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })
         }

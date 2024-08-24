@@ -2,15 +2,15 @@ import { Col, Row } from 'react-bootstrap';
 import CountdownTimer from './CountdownTimer';
 import BandMember from './Components/Cards/BandMember';
 import { useEffect, useState } from 'react';
-import { chunk, getAllConfigurations } from './Utils/Utils';
+import { chunk, getAllConfigurations, getOneConfiguration } from './Utils/Utils';
 import Debug from './Components/Debug/Debug';
 import axios from 'axios';
 
 const Home = (props) => {
-  const [configurations, setConfigurations] = useState({});
+  const [configurations, setConfigurations] = useState([]);
   const [bandMembers, setBandMembers] = useState([]);
 
-  const bandMemberPerLineMdScreen = 2;
+  const bandMemberPerLineMdScreen = 4;
 
   useEffect(() => {
     getAllConfigurations()
@@ -26,6 +26,8 @@ const Home = (props) => {
       .catch(err => console.error(err))
 
   }, []);
+
+
 
   return (
     <>
@@ -50,7 +52,18 @@ const Home = (props) => {
         <Col xs={1} md={4}></Col>
       </Row>
 
-      <Row className='mx-md-3 mx-0'>
+      <Row className='mx-md-3 mx-0' id="who-we-are">
+        {(() => {
+          for (let config of configurations) {
+              if (config.slug === "pagina-da-secao-quem-somos-da-home") {
+                  return <Col xs={12} className='my-md-3 my-10' dangerouslySetInnerHTML={{__html: config.value_translated.text }}></Col>;
+              }
+          }
+
+          return null
+        })()}
+
+
         { bandMembers.length <= bandMemberPerLineMdScreen
           ? bandMembers.map((bandMember, key) => {
 
@@ -82,7 +95,224 @@ const Home = (props) => {
         }
       </Row>
 
-      
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </>
   )
 }

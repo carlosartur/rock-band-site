@@ -1,0 +1,25 @@
+.simplebar-content .nav-link {
+    color: white !important;
+    --ci-primary-color: white;
+    --cui-sidebar-nav-link-hover-bg: #303C54;
+    --cui-sidebar-nav-group-indicator-color: white;
+}
+
+.simplebar-content .nav-link.active {
+    color: #303C54 !important;
+    --ci-primary-color: #303C54;
+    --cui-sidebar-nav-link-hover-bg: #303C54 !important;
+}
+
+.nav-link.active svg {
+    color: #303C54 !important;
+    --ci-primary-color: #303C54;
+    --cui-sidebar-nav-link-hover-bg: #303C54 !important;
+}
+
+.nav-link.active:hover, .nav-link.active:hover svg {
+    color: white !important;
+    --ci-primary-color: white !important;
+    --cui-sidebar-nav-link-hover-bg: #303C54 !important;
+    
+}

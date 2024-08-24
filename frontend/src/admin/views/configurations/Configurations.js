@@ -87,6 +87,8 @@ const SearchResultsTable = (searchResponse) => {
                           alt='Gallery'
                         />
                       );
+                    case 'page':
+                      return <div>{item.value_translated.title}</div>;
                     case 'text':
                       return <div>{item.value_translated}</div>;
                     case 'string':
@@ -114,6 +116,8 @@ const SearchResultsTable = (searchResponse) => {
                       return <span>Texto longo</span>;
                     case 'string':
                       return <span>Texto curto</span>;
+                    case 'page':
+                      return <span>Página</span>;
                     case 'multivalues':
                       return <span>Múltiplos valores</span>;
                     default:

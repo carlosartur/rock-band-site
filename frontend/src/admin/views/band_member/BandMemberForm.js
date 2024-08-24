@@ -83,7 +83,7 @@ const BandMemberForm = () => {
         const response = await api.put(`${process.env.REACT_APP_API_URL}/admin/band_member`, formData);
 
         lauchToast({
-          message: 'Membro da banda editada com sucesso!',
+          message: 'Membro da banda editado com sucesso!',
           color: 'success',
           visible: true,
         });

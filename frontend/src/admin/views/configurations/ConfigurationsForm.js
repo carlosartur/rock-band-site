@@ -22,6 +22,12 @@ import {
   CModalTitle,
   CRow,
   CSpinner,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
   CToast,
   CToastBody,
   CToastClose,
@@ -35,6 +41,8 @@ import { AuthComponent } from '../../components/AuthComponent';
 import { EditorComponent } from '../../components/EditorComponent';
 import { PaginationFromData } from '../../components/PaginationComponent';
 import { BrazilianFormatData } from '../../components/BrazilianFormatData';
+import Debug from '../../../Components/Debug/Debug';
+import { showDescriptionResume } from '../../../Utils/Utils';
 
 const ConfigurationsForm = () => {
   const { search } = useLocation();
@@ -48,6 +56,19 @@ const ConfigurationsForm = () => {
   const [addPhotoModalData, setAddPhotoModalData] = useState({
     visible: false,
   });
+  
+  const [pageModalData, setPageModalData] = useState({
+    visible: false,
+    content: '<p>Selecione uma página para visualizar</p>',
+  });
+
+  const [searchedPages, setSearchedPages] = useState([]);
+
+  const [addPagesModalData, setAddPagesModalData] = useState({
+    visible: false,
+  });
+
+  const [pagesNameSearch, setPagesNameSearch] = useState([]);
 
   const [formData, setFormData] = useState({
     id,
@@ -168,6 +189,19 @@ const ConfigurationsForm = () => {
       });
   };
 
+  const loadPages = (
+    url = `${process.env.REACT_APP_API_URL}/admin/pages`
+  ) => {
+    api
+      .get(url)
+      .then((response) => {
+        setSearchedPages(response.data);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar páginas', error);
+      });
+  };
+
   useEffect(() => {
     api
       .get(`${process.env.REACT_APP_API_URL}/admin/configurations/${id}`)
@@ -193,6 +227,7 @@ const ConfigurationsForm = () => {
       });
 
     loadGallery();
+    loadPages();
   }, []);
 
   return (
@@ -298,6 +333,144 @@ const ConfigurationsForm = () => {
               searchResults={searchedPhotos}
               clickFunction={(e) =>
                 loadGallery(e.target.getAttribute('linkpaginacao'))
+              }
+            ></PaginationFromData>
+          </CCol>
+        </CModalFooter>
+      </CModal>
+
+      <CModal
+        size='xl'
+        alignment='center'
+        visible={pageModalData.visible}
+        onClose={() => setPageModalData({ visible: false })}
+      >
+        <CModalHeader>
+          <CModalTitle>Visualizar página</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CRow xs={{ cols: 1, gutter: 4 }} md={{ cols: 3 }}>
+            <div dangerouslySetInnerHTML={{__html: pageModalData.content}}></div>
+          </CRow>
+        </CModalBody>
+        <CModalFooter>
+        </CModalFooter>
+      </CModal>
+
+      <CModal
+        size='xl'
+        alignment='center'
+        visible={addPagesModalData.visible}
+        onClose={() => setAddPagesModalData({ visible: false })}
+      >
+        <CModalHeader>
+          <CModalTitle>Selecionar página</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CRow>
+            <CCol xs={12}>
+              <CCard className='mb-4'>
+                <CForm
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    loadPages(
+                      `${process.env.REACT_APP_API_URL}/admin/pages?title=${pagesNameSearch}`
+                    );
+                  }}
+                >
+                  <CCardHeader>
+                    <strong>Buscar foto</strong>
+                  </CCardHeader>
+
+                  <CCardBody className='row'>
+                    <CCol xs={4}>
+                      <CFormLabel htmlFor='name'>Nome</CFormLabel>
+                      <CFormInput
+                        value={pagesNameSearch}
+                        onChange={(e) => setPagesNameSearch(e.target.value)}
+                        id='name'
+                        name='name'
+                      ></CFormInput>
+                      {invalidInputs.name && (
+                        <CFormFeedback invalid={invalidInputs.name}>
+                          {invalidInputsMessages.name}
+                        </CFormFeedback>
+                      )}
+                    </CCol>
+                  </CCardBody>
+                  <CCardFooter>
+                    <CCol xs={12} align='right'>
+                      <CButtonGroup role='group' aria-label='Ações de Hotel'>
+                        <CButton type='submit' disabled={loading} color='primary'>
+                          <CIcon icon={icon.cilZoom} />
+                          &nbsp; Buscar
+                        </CButton>
+                      </CButtonGroup>
+                    </CCol>
+                  </CCardFooter>
+                </CForm>
+              </CCard>
+            </CCol>
+          </CRow>
+
+          <CRow>
+            <CCol xs={12}>
+              {searchedPages?.data?.length ? (
+                <CCard className='mb-4'>
+                  <CCardHeader>
+                    <strong>Buscar página</strong>
+                  </CCardHeader>
+                  <CCardBody className='row'>
+                    <CTable striped hover>
+                      <CTableHead>
+                        <CTableRow>
+                          <CTableHeaderCell scope='col'>
+                            Url
+                          </CTableHeaderCell>
+                          <CTableHeaderCell scope='col'>
+                            Título
+                          </CTableHeaderCell>
+                          <CTableHeaderCell scope='col'>Texto</CTableHeaderCell>
+                          <CTableHeaderCell scope='col'>&nbsp;</CTableHeaderCell>
+                        </CTableRow>
+                      </CTableHead>
+                      <CTableBody>
+                        {searchedPages.data.map((item, index) => (
+                          <CTableRow key={index}>
+                            <CTableDataCell>{item.slug}</CTableDataCell>
+                            <CTableDataCell>{item.title}</CTableDataCell>
+                            <CTableDataCell>{showDescriptionResume(item.text)}</CTableDataCell>
+                            <CTableDataCell>
+                              <CButtonGroup role='group' aria-label='Ações de Pages'>
+                                <CButton
+                                  color='primary'
+                                  onClick={() => {
+                                    setFormData({...formData, value_translated: item, value: item.id});
+                                    setAddPagesModalData({ visible: false });
+                                  }}
+                                >
+                                  <CIcon icon={icon.cilCheckAlt} size='lg' />
+                                </CButton>
+                              </CButtonGroup>
+                            </CTableDataCell>
+                          </CTableRow>
+                        ))}
+                      </CTableBody>
+                    </CTable>
+                  </CCardBody>
+                </CCard>
+              ) : (
+                <CAlert color='info'>Nenhuma página encontrada.</CAlert>
+              )}
+            </CCol>
+          </CRow>
+        </CModalBody>
+        <CModalFooter>
+          <CCol xs={12} align='center'>
+            <PaginationFromData
+              searchResults={searchedPages}
+              clickFunction={(e) =>
+                loadPages(e.target.getAttribute('linkpaginacao'))
               }
             ></PaginationFromData>
           </CCol>
@@ -412,6 +585,58 @@ const ConfigurationsForm = () => {
                             id='value'
                             name='value'
                           ></CFormInput>
+                        );
+
+                      case 'page':
+                        return (
+                          <>
+                            <CInputGroup style={{ marginTop: "15px"}}>
+                              <span class="input-group-text">Título</span>
+                              <CFormInput
+                                invalid={invalidInputs.value}
+                                value={formData.value_translated.title}
+                                id='pageTitle'
+                                name='pageTitle'
+                                readOnly={true}
+                              ></CFormInput>
+                              <span class="input-group-text">Slug</span>
+                              <CFormInput
+                                invalid={invalidInputs.value}
+                                value={formData.value_translated.slug}
+                                id='pageTitle'
+                                name='pageTitle'
+                                readOnly={true}
+                              ></CFormInput>
+                              <button class="btn btn-dark" type="button"
+                                onClick={() => {
+                                  setPageModalData({
+                                    visible: true,
+                                    content: formData.value_translated.text
+                                  });
+                                }}
+                              >
+                                Visualizar
+                              </button>
+                              <button class="btn btn-warning" type="button"
+                                onClick={() => {
+                                  setAddPagesModalData({
+                                    visible: true,
+                                  });
+                                }}
+                              >
+                                Mudar
+                              </button>
+                            </CInputGroup>
+
+                            <CFormInput
+                              invalid={invalidInputs.value}
+                              value={formData.value}
+                              onChange={handleChange}
+                              id='value'
+                              name='value'
+                              type='hidden'
+                            ></CFormInput>
+                          </>
                         );
 
                       case 'multivalues':

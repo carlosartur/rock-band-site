@@ -425,7 +425,7 @@ const Events = () => {
 
                 <CCol xs={6}>
                   <CFormLabel htmlFor='date_start_from'>
-                    Data de início de
+                    Data de
                   </CFormLabel>
                   <CFormInput
                     type='datetime-local'
@@ -437,7 +437,7 @@ const Events = () => {
                 </CCol>
                 <CCol xs={6}>
                   <CFormLabel htmlFor='date_start_to'>
-                    Data de início até
+                    Data até
                   </CFormLabel>
                   <CFormInput
                     type='datetime-local'
@@ -448,28 +448,6 @@ const Events = () => {
                   ></CFormInput>
                 </CCol>
 
-                <CCol xs={6}>
-                  <CFormLabel htmlFor='date_end_from'>
-                    Data de fim de
-                  </CFormLabel>
-                  <CFormInput
-                    type='datetime-local'
-                    value={formData.date_end_from}
-                    onChange={handleChange}
-                    id='date_end_from'
-                    name='date_end_from'
-                  ></CFormInput>
-                </CCol>
-                <CCol xs={6}>
-                  <CFormLabel htmlFor='date_end_to'>Data de fim até</CFormLabel>
-                  <CFormInput
-                    type='datetime-local'
-                    value={formData.date_end_to}
-                    onChange={handleChange}
-                    id='date_end_to'
-                    name='date_end_to'
-                  ></CFormInput>
-                </CCol>
               </CCardBody>
 
               <CCardFooter>
