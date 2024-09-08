@@ -31,7 +31,13 @@ class ConfigurationsController extends Controller
         try {
             $configurations = Configurations::where('hide_to_frontend', '=', 0)->get();
 
-            return response()->json(['message' => 'Success!', 'data' => $configurations], $request->isMethod('post') ? 201 : 200);
+            $configResponse = [];
+
+            foreach ($configurations as $config) {
+                $configResponse[$config->slug] = $config;
+            }
+
+            return response()->json(['message' => 'Success!', 'data' => $configResponse], $request->isMethod('post') ? 201 : 200);
         } catch (Throwable $throwable) {
             return ErrorDefaultResponseService::responseByException($throwable);
         }

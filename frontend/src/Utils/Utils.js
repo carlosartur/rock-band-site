@@ -41,6 +41,11 @@ export const getAllConfigurations = async () => {
  */
 export const getOneConfiguration = async (slug) => {
     const configs = await getAllConfigurations();
+
+    if (configs[slug]) {
+        return configs[slug];
+    }
+
     for (let config of configs) {
         if (config.slug === slug) {
             return config;
@@ -87,14 +92,35 @@ export const showDescriptionResume = (html, maxLength = 100) => {
         .textContent
         .replaceAll('\n', '')
         .replace(/\s{2,}/g, ' ')
-        .trim()
-        .split(' ');
+        .trim();
 
+    return stringLimit(textWords, maxLength);
+}
+
+/**
+ * 
+ * @param {String} str 
+ * @param {Number} maxLength 
+ * @returns 
+ */
+export const stringLimit = (str, maxLength = 100) => {
+    if (!str.includes(" ")) {
+        let suffix = "";
+
+        if (str.length > maxLength) {
+            suffix = " ...";
+        }
+
+        return str.substring(0, maxLength) + suffix;
+    }
+
+    const textWords = str.split(' ');
+    
     let result = '';
 
     for (const word of textWords) {
         if (result.length > maxLength) {
-            return result + '...';
+            return result + ' ...';
         }
 
         result += word + ' ';

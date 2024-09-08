@@ -25,7 +25,7 @@ export function StickyNavbar() {
       text: 'Quem somos'
     },
     {
-      href: '#',
+      href: 'next-shows',
       text: 'Próximos shows'
     }
   ];
@@ -73,7 +73,12 @@ export function StickyNavbar() {
               size="sm"
               className="hidden lg:inline-block"
             >
-              <span>Contato</span>
+              <InternalAnchor 
+                to="contact-form"
+                className="flex items-center !no-underline text-black" 
+                text="Contato"
+                redirectTo={"/"}
+              />
             </Button>
           </div>
           <IconButton

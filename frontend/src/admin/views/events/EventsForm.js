@@ -390,6 +390,23 @@ const EventsForm = () => {
                     </CFormFeedback>
                   )}
                 </CCol>
+                
+                <CCol xs={6}>
+                  <CFormLabel htmlFor='address'>Endereço</CFormLabel>
+                  <CFormInput
+                    invalid={invalidInputs.address}
+                    value={formData.address}
+                    onChange={handleChange}
+                    id='address'
+                    name='address'
+                  ></CFormInput>
+                  {invalidInputs.address && (
+                    <CFormFeedback invalid={invalidInputs.address}>
+                      {invalidInputsMessages.address}
+                    </CFormFeedback>
+                  )}
+                </CCol>
+
                 <CCol xs={12}>
                   <CFormLabel htmlFor='description'>Descrição</CFormLabel>
 

@@ -90,6 +90,7 @@ class EventsController extends Controller implements CrudControllerInterface
             $events->enabled = $request->input('enabled');
             $events->city_id = $request->input('city_id');
             $events->gallery_id = $request->input('gallery_id');
+            $events->address = $request->input('address');
 
             $events->setDates();
             

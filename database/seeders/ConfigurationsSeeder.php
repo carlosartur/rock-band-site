@@ -32,6 +32,36 @@ class ConfigurationsSeeder extends Seeder
             'default_value' => "",
             "type" => ConfigurationTypes::PageType->value,
         ],
+        [
+            'name' => "Texto da seção contato da home",
+            'default_value' => "",
+            "type" => ConfigurationTypes::TextType->value,
+        ],
+        [
+            'name' => "Link de contato falha do formulário",
+            'default_value' => "",
+            "type" => ConfigurationTypes::StringType->value,
+        ],
+        [
+            'name' => "Link Canal Youtube",
+            'default_value' => "",
+            "type" => ConfigurationTypes::StringType->value,
+        ],
+        [
+            'name' => "Link Perfil Instagram",
+            'default_value' => "",
+            "type" => ConfigurationTypes::StringType->value,
+        ],
+        [
+            'name' => "Link Perfil Facebook",
+            'default_value' => "",
+            "type" => ConfigurationTypes::StringType->value,
+        ],
+        [
+            'name' => "Link Perfil Github",
+            'default_value' => "",
+            "type" => ConfigurationTypes::StringType->value,
+        ],
     ];
 
     /**

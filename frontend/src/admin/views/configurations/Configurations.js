@@ -36,6 +36,7 @@ import CIcon from '@coreui/icons-react';
 import { AuthComponent } from '../../components/AuthComponent';
 import { handleCsvExport } from '../../utils/exportcsv';
 import { BrazilianFormatData } from '../../components/BrazilianFormatData';
+import { stringLimit } from '../../../Utils/Utils';
 
 const SearchResultsTable = (searchResponse) => {
   const { searchResults, onClickPagination, onClickDelete, onClickSort } = searchResponse;
@@ -92,7 +93,7 @@ const SearchResultsTable = (searchResponse) => {
                     case 'text':
                       return <div>{item.value_translated}</div>;
                     case 'string':
-                      return <div>{item.value}</div>;
+                      return <div>{stringLimit(item.value)}</div>;
                     case 'multivalues':
                       return <span>
                         {Object.entries(JSON.parse(item.value)).map((val, idx) => {

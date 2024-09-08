@@ -5,10 +5,14 @@ import { useEffect, useState } from 'react';
 import { chunk, getAllConfigurations, getOneConfiguration } from './Utils/Utils';
 import Debug from './Components/Debug/Debug';
 import axios from 'axios';
+import { NextShows } from './Components/Timeline/NextShows';
+import ContactForm from './Components/ContactForm/ContactForm';
+import Footer from './Components/Footer/Footer';
 
 const Home = (props) => {
   const [configurations, setConfigurations] = useState([]);
   const [bandMembers, setBandMembers] = useState([]);
+  const [futureEvents, setFutureEvents] = useState([]);
 
   const bandMemberPerLineMdScreen = 4;
 
@@ -22,6 +26,12 @@ const Home = (props) => {
     axios.get(`${process.env.REACT_APP_API_URL}/api/band-member/get-all`)
       .then(data => {
         setBandMembers(data.data.data);
+      })
+      .catch(err => console.error(err))
+
+    axios.get(`${process.env.REACT_APP_API_URL}/api/events/future`)
+      .then(data => {
+        setFutureEvents(data.data.data);
       })
       .catch(err => console.error(err))
 
@@ -42,26 +52,16 @@ const Home = (props) => {
         
         <Col xs={1} md={4}></Col>
       </Row>
-      <Row>
-        <Col xs={1} md={4}></Col>
-        <Col xs={10} md={4}>
-          <p className='text-white w-full text-4xl text-center'>
-            <CountdownTimer targetDate="2024-08-01T00:00:00Z" />
-          </p>
-        </Col>
-        <Col xs={1} md={4}></Col>
-      </Row>
 
       <Row className='mx-md-3 mx-0' id="who-we-are">
-        {(() => {
-          for (let config of configurations) {
-              if (config.slug === "pagina-da-secao-quem-somos-da-home") {
-                  return <Col xs={12} className='my-md-3 my-10' dangerouslySetInnerHTML={{__html: config.value_translated.text }}></Col>;
-              }
-          }
+        <Col xs={12} className='my-md-3 my-10 text-white text-center'>
+          <h2>Quem Somos</h2>
+        </Col>
 
-          return null
-        })()}
+        { configurations["pagina-da-secao-quem-somos-da-home"] 
+          ? <Col xs={12} className='my-md-3 my-10 text-white text-center' dangerouslySetInnerHTML={{__html: configurations["pagina-da-secao-quem-somos-da-home"].value_translated.text }}></Col>
+          : null
+        }
 
 
         { bandMembers.length <= bandMemberPerLineMdScreen
@@ -95,224 +95,24 @@ const Home = (props) => {
         }
       </Row>
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Row className='mx-md-3 mx-0' id="next-shows">
+        <Col xs={12} className='my-md-3 my-10 text-white text-center'>
+          <h2>Próximas apresentações</h2>
+        </Col>
+        <NextShows events={futureEvents}/>
+      </Row>
+
+      <Row className='mx-md-3 mx-0' id="contact-form">
+        <Col xs={12} className='my-md-3 my-10 text-white text-center'>
+          <h2>Contato</h2>
+        </Col>
+        <Col xs={12} className='my-md-3 my-10 text-white text-center'>
+          <ContactForm />
+        </Col>
+      </Row>
+
+      <Footer />
+      
     </>
   )
 }
