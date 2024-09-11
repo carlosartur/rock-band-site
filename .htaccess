@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Redireciona para o build do React se a requisição for para a raiz "/"
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^ /frontend/build/index.html [L]
+
+# Redireciona todas as outras requisições para o diretório /public do Laravel
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [L]
