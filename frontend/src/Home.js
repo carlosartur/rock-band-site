@@ -69,10 +69,10 @@ const Home = (props) => {
 
             return (<Col xs={12} md={mdCol} className='my-md-3 my-10' key={key}>
               <BandMember 
-                photoSrc={`${process.env.REACT_APP_API_URL}/storage/${bandMember.photo.path}`}
-                name={bandMember.name}
-                position={bandMember.position}
-                description={bandMember.description}
+                photoSrc={`${process.env.REACT_APP_API_URL}/storage/${bandMember?.photo?.path}`}
+                name={bandMember?.name}
+                position={bandMember?.position}
+                description={bandMember?.description}
               />
             </Col>)
           })

@@ -295,7 +295,7 @@ const ConfigurationsForm = () => {
                   <CCard>
                     <CCardImage
                       orientation='top'
-                      src={`${process.env.REACT_APP_API_URL}/${item.path}`}
+                      src={`${process.env.REACT_APP_API_URL}${item.path}`}
                     />
                     <CCardBody>
                       <CCardTitle>{item.name}</CCardTitle>
@@ -530,7 +530,7 @@ const ConfigurationsForm = () => {
                               <CCard>
                                 <CCardImage
                                   orientation='top'
-                                  src={`${process.env.REACT_APP_API_URL}/${formData.value_translated}`}
+                                  src={`${process.env.REACT_APP_API_URL}${formData.value_translated}`}
                                 />
                                 <CCardFooter>
                                   <CCol xs={12} align='right'>

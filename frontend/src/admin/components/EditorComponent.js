@@ -142,7 +142,7 @@ export const EditorComponent = ({
                   <CCard>
                     <CCardImage
                       orientation='top'
-                      src={`${process.env.REACT_APP_API_URL}/${item.path}`}
+                      src={`${process.env.REACT_APP_API_URL}${item.path}`}
                     />
                     <CCardBody>
                       <CCardTitle>{item.name}</CCardTitle>
