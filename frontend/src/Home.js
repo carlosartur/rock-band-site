@@ -37,11 +37,9 @@ const Home = (props) => {
 
   }, []);
 
-
-
   return (
     <>
-      <Row className='text-center overflow-hidden'>
+      <Row className='text-center overflow-hidden mt-3'>
         <Col xs={1} md={4}></Col>
 
         <Col xs={10} md={4}>

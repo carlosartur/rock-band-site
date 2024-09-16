@@ -16,5 +16,6 @@ code {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #323433;
+  /* background-color: #323433; */
+  background-color: #000;
 }
