@@ -158,21 +158,34 @@ Route::prefix('admin')->middleware('auth:jwt')->group(function () {
     });
 });
 
-
-Route::get('/{any?}', function ($any = null) {
-    $path = base_path('frontend/build/' . $any);
-
-    if ($any && File::exists($path)) {
-        $mimeType = mime_content_type($path);
-
-        if (preg_match('/\.(css|js)$/', $path) && !in_array($mimeType, ['text/css', 'application/javascript'])) {
-            $mimeType = preg_match('/\.css$/', $path) ? 'text/css' : 'application/javascript';
+if (env('SERVE_STORAGE_USING_PHP')) {
+    Route::get('storage/{filename}', function ($filename) {
+        $path = storage_path('app/public/' . $filename);
+        
+        if (file_exists($path)) {
+            return response()->file($path);
         }
 
-        return response()->file($path, [
-            'Content-Type' => $mimeType
-        ]);
-    }
+        abort(404);
+    });
+}
 
-    return response()->file(base_path('frontend/build/index.html'));
-})->where('any', '.*');
+if (env('SERVE_COMPILED_SITE_USING_PHP')) {
+    Route::get('/{any?}', function ($any = null) {
+        $path = base_path('frontend/build/' . $any);
+
+        if ($any && File::exists($path)) {
+            $mimeType = mime_content_type($path);
+
+            if (preg_match('/\.(css|js)$/', $path) && !in_array($mimeType, ['text/css', 'application/javascript'])) {
+                $mimeType = preg_match('/\.css$/', $path) ? 'text/css' : 'application/javascript';
+            }
+
+            return response()->file($path, [
+                'Content-Type' => $mimeType
+            ]);
+        }
+
+        return response()->file(base_path('frontend/build/index.html'));
+    })->where('any', '.*');
+}
