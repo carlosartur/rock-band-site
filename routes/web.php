@@ -17,10 +17,7 @@ use App\Http\Controllers\UsersController;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\File;
 
 Route::controller(AuthController::class)->prefix('admin-auth')->group(function () {
     Route::post('login', 'login');
@@ -160,3 +157,22 @@ Route::prefix('admin')->middleware('auth:jwt')->group(function () {
         Route::delete('/', 'delete');
     });
 });
+
+
+Route::get('/{any?}', function ($any = null) {
+    $path = base_path('frontend/build/' . $any);
+
+    if ($any && File::exists($path)) {
+        $mimeType = mime_content_type($path);
+
+        if (preg_match('/\.(css|js)$/', $path) && !in_array($mimeType, ['text/css', 'application/javascript'])) {
+            $mimeType = preg_match('/\.css$/', $path) ? 'text/css' : 'application/javascript';
+        }
+
+        return response()->file($path, [
+            'Content-Type' => $mimeType
+        ]);
+    }
+
+    return response()->file(base_path('frontend/build/index.html'));
+})->where('any', '.*');
